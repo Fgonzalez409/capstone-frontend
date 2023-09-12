@@ -1,33 +1,40 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useEffect, useState } from 'react'
+import {Routes, Route, Navigate} from "react-router-dom"
+
+import Dashboard from './components/Dashboard'
+import Header from './components/Header'
+import AuthForm from './components/Forms/AuthForm'
 import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
+const checkAuth = (token) => {
+  if(token.length){
+    return true
+  }
+  return false
+}
 
+const ProtectedRoute = (props) => {
+  const {component: Component, token, ...rest} = props
+  return checkAuth(token) === true ? (<Component {...rest}/>): (<Navigate to="/signin"/>)
+}
+
+function App() {
+
+  const [token, setToken] = useState("")
+
+  
+
+  
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <h1>Portfolio Builder</h1>
+      <Header/>
+      <Routes>
+        <Route path="/signup" element={<AuthForm formType="signup"/>}/>
+        <Route path="/signin" element={<AuthForm formType="signin" setToken={setToken}/>}/>
+        <Route path="/" element={<ProtectedRoute component={Dashboard} token={token}/>}/>
+
+      </Routes>
     </>
   )
 }
