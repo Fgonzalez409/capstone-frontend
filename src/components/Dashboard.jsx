@@ -8,7 +8,7 @@ const Dashboard = () => {
   const API_KEY = "yAIutPvgJDxgqt83ZQLp8WCKfrmMtQ5BDQE7x9iG"
     const [data,setData] = useState([])
     useEffect(() => {
-        fetch("https://capstone-backend-blush.vercel.app/users")
+        fetch(`https://developer.nps.gov/api/v1/parks?parkCode=acad&api_key=${API_KEY}`)
         .then((res) => res.json())
         .then((data) => setData(data))
     }, [])
