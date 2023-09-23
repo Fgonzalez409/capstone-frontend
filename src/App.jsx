@@ -21,9 +21,6 @@ function App() {
 
   const [token, setToken] = useState("")
 
-  
-
-  
   return (
     <>
       <Header/>
@@ -31,7 +28,6 @@ function App() {
         <Route path="/signup" element={<AuthForm formType="signup"/>}/>
         <Route path="/signin" element={<AuthForm setToken={setToken} formType="signin" />}/>
         <Route path="/" element={<ProtectedRoute component={Dashboard} token={token}/>}/>
-
       </Routes>
     </>
   )
