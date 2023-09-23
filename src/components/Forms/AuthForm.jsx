@@ -25,10 +25,6 @@ const AuthForm = ({formType = "signin", setToken}) => {
 
 const content = formType === "signup" ? signupContent : signinContent
 
-    // useEffect(() => {
-    //     console.log({token})
-    // },[token])
-
     useEffect(() => {
         console.log({message})
     },[message])
@@ -51,7 +47,7 @@ const content = formType === "signup" ? signupContent : signinContent
 
   return (
     <form onSubmit={handleSubmit}>
-        <h2>signin</h2>
+        <h2>signup</h2>
         <label className={styles.label}>
             Email:
             <input type="email" onChange={(e) => setEmail(e.target.value)}/>

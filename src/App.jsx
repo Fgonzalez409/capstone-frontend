@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import {Routes, Route, Navigate} from "react-router-dom"
-
 import Dashboard from './components/Dashboard'
 import Header from './components/Header'
 import AuthForm from './components/Forms/AuthForm'
@@ -27,7 +26,6 @@ function App() {
   
   return (
     <>
-      <h1>Portfolio Builder</h1>
       <Header/>
       <Routes>
         <Route path="/signup" element={<AuthForm formType="signup"/>}/>
