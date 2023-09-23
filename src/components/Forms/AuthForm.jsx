@@ -47,7 +47,7 @@ const content = formType === "signup" ? signupContent : signinContent
 
   return (
     <form onSubmit={handleSubmit}>
-        <h2>signup</h2>
+        <h2>Signin</h2>
         <label className={styles.label}>
             Email:
             <input type="email" onChange={(e) => setEmail(e.target.value)}/>
