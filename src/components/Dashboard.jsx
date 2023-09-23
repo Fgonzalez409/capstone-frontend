@@ -1,7 +1,11 @@
 import React, { useState } from 'react'
 import { useEffect } from 'react'
 
+
+
 const Dashboard = () => {
+
+  const API_KEY = "yAIutPvgJDxgqt83ZQLp8WCKfrmMtQ5BDQE7x9iG"
     const [data,setData] = useState([])
     useEffect(() => {
         fetch("https://capstone-backend-blush.vercel.app/users")

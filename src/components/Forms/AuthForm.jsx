@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
 import styles from "./AuthForm.module.css"
 import axios from "axios"
+
 
 
 const signupContent = {
@@ -18,20 +20,20 @@ const signinContent = {
 
 
 const AuthForm = ({formType = "signin", setToken}) => {
-
+    const navigate = useNavigate()
     const [email,setEmail] = useState("")
     const [password,setPassword] = useState("")
     const [message, setMessage] = useState("")
 
 const content = formType === "signup" ? signupContent : signinContent
 
-    useEffect(() => {
-        console.log({message})
-    },[message])
+    // useEffect(() => {
+    //     console.log({message})
+    // },[message])
 
     const handleSubmit = (e) => {
         e.preventDefault()
-    
+        
 
     axios.post(`https://capstone-backend-blush.vercel.app/${content.route}`, {
         email,
@@ -41,7 +43,7 @@ const content = formType === "signup" ? signupContent : signinContent
             setMessage(res.data.message)
         } else 
             setToken(res.data.token)
-        
+            navigate("/")//attempt to navigate to dashboard
         })
 }
 
