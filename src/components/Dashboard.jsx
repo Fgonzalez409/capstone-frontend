@@ -10,12 +10,12 @@ const Dashboard = () => {
     state: ""
   })
 
-    const [data,setData] = useState([])
-    useEffect(() => {
-        fetch("https://developer.nps.gov/api/v1/parks?parkCode=acad&api_key=yAIutPvgJDxgqt83ZQLp8WCKfrmMtQ5BDQE7x9iG")
-        .then((res) => res.json())
-        .then((data) => setData(data.id))
-    }, [])
+    // const [data,setData] = useState([])
+    // useEffect(() => {
+    //     // fetch("https://capstone-backend-blush.vercel.app/users")
+    //     .then((res) => res.json())
+    //     .then((data) => setData(data.id))
+    // }, [])
 
   return (
     <div>{data.map((x) => (
