@@ -20,7 +20,7 @@ const ProtectedRoute = (props) => {
 function App() {
 
   const [token, setToken] = useState("")
-
+  console.log(token)
   return (
     <>
       <Header/>
@@ -28,6 +28,8 @@ function App() {
         <Route path="/signup" element={<AuthForm formType="signup"/>}/>
         <Route path="/signin" element={<AuthForm setToken={setToken} formType="signin" />}/>
         <Route path="/" element={<ProtectedRoute component={Dashboard} token={token}/>}/>
+        {/* <Route path="/" element={ <Dashboard token={token}/>}/> */}
+
       </Routes>
     </>
   )
