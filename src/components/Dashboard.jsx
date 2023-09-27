@@ -8,12 +8,13 @@ const Dashboard = () => {
   const [data,setData] = useState([])
   const [selectedPark, setSelectedPark] = useState("")
   const [parks, setParks] = useState([])
-  const [image, setImage] = useState("")
+  const [images, setImages] = useState("")//stores the images for the selected park
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0)//index of selected Image
 
   const handleDropdown = (event) => {
     const selectedPark = event.target.value
     setSelectedPark(selectedPark)
-    fetchParkImage(selectedPark)
+    fetchParkImages(selectedPark)
   }
     
     
@@ -30,34 +31,58 @@ const Dashboard = () => {
         })
     }, [])
 
-  const fetchParkImage = (parkName) => {
+  const fetchParkImages = (parkName) => {
 
-    const selectedParkData = data.find((park) => park.fullName === parkName)
+    const selectedParkData = data.find((park) => park.fullName === parkName);
 
-    if(selectedParkData && selectedParkData.images.length > 0){
-      const firstImage = selectedParkData.images[0]
-      setImage(firstImage.url)
-    }else {
-      setImage("No image to display")
+    if (selectedParkData && selectedParkData.images.length > 0) {
+      // Set all images for the selected park
+      setImages(selectedParkData.images);
+      // Select the first image by default
+      setSelectedImageIndex(0);
+    } else {
+      setImages([]); // Clear the images if no images are found for the park
     }
-
-    
   }
 
+  const handleImageChange = (index) => {
+    setSelectedImageIndex(index);
+  };
 
-  return (  
-    <>
-      <select value ={selectedPark} onChange={handleDropdown}>
-          {data.map((park, i) => (
-            <option key={park.id} value={park.fullName}>
-              {park.fullName}
-            </option>
-          ))}
+  
+
+  return (
+    <div className="dashboard-container">
+      <select value={selectedPark} onChange={handleDropdown}>
+        {data.map((park, i) => (
+          <option key={park.id} value={park.fullName}>
+            {park.fullName}
+          </option>
+        ))}
       </select>
-      
-      {image && <img src={image} alt="Selected Park" className='park-image'/>}
-  </>
-  )
+
+      {images.length > 0 && (
+        <>
+          <div className="image-thumbnails">
+            {images.map((image, index) => (
+              <img
+                key={index}
+                src={image.url}
+                alt={`Image ${index + 1}`}
+                className={index === selectedImageIndex ? 'selected' : ''}
+                onClick={() => handleImageChange(index)}
+              />
+            ))}
+          </div>
+          <img
+            src={images[selectedImageIndex].url}
+            alt={`Selected Park`}
+            className="park-image"
+          />
+        </>
+      )}
+    </div>
+  );
 }
 
 export default Dashboard
