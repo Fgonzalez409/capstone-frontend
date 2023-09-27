@@ -1,10 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import "../styles/Header.css"
 
 const Header = () => {
   return (
     <header>
-      <h1>Portfolio Builder</h1>
+      <h1>National Park Blog</h1>
       <nav>
         <ul>
           <li><Link to="/signup">Signup</Link></li>
@@ -12,7 +13,7 @@ const Header = () => {
           <li><Link to="/">Dashboard</Link></li>
         </ul>
       </nav>
-        Header
+        Choose a national park you have visited.
     </header>
   )
 }

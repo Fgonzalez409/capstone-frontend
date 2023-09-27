@@ -1,21 +1,22 @@
 import React, { useState } from 'react'
 import { useEffect } from 'react'
 import axios from 'axios'
+import "./Dashboard.css"
 
 
 const Dashboard = () => {
+  const [data,setData] = useState([])
+  const [selectedPark, setSelectedPark] = useState("")
+  const [parks, setParks] = useState([])
+  const [image, setImage] = useState("")
 
-  const [parks, setParks] = useState({
-    name: "",
-    state: ""
-  })
-
-    const [data,setData] = useState([])
-    // useEffect(() => {
-    //     fetch("https://developer.nps.gov/api/v1/parks?parkCode=acad&api_key=yAIutPvgJDxgqt83ZQLp8WCKfrmMtQ5BDQE7x9iG")
-    //     .then((res) => res.json())
-    //     .then((data) => setData(data.id))
-    // }, [])
+  const handleDropdown = (event) => {
+    const selectedPark = event.target.value
+    setSelectedPark(selectedPark)
+    fetchParkImage(selectedPark)
+  }
+    
+    
 
     useEffect(() => {
       axios
@@ -28,25 +29,37 @@ const Dashboard = () => {
           console.log("ERROR", error)
         })
     }, [])
-  // console.log(data.data)
-  return (
+
+  const fetchParkImage = (parkName) => {
+
+    const selectedParkData = data.find((park) => park.fullName === parkName)
+
+    if(selectedParkData && selectedParkData.images.length > 0){
+      const firstImage = selectedParkData.images[0]
+      setImage(firstImage.url)
+    }else {
+      setImage("No image to display")
+    }
 
     
-    <>
-      <select>
-        
-      
-          {data.map((x, i) => (
-            <option key={x.id} value={x.fullName}>
-              {x.fullName}
+  }
 
+
+  return (  
+    <>
+      <select value ={selectedPark} onChange={handleDropdown}>
+          {data.map((park, i) => (
+            <option key={park.id} value={park.fullName}>
+              {park.fullName}
             </option>
-            
           ))}
-        
       </select>
+      
+      {image && <img src={image} alt="Selected Park" className='park-image'/>}
   </>
   )
 }
 
 export default Dashboard
+
+
