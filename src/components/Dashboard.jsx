@@ -49,7 +49,7 @@ const Dashboard = () => {
     setSelectedImageIndex(index);
   };
 
-  
+
 
   return (
     <div className="dashboard-container">
@@ -86,5 +86,3 @@ const Dashboard = () => {
 }
 
 export default Dashboard
-
-

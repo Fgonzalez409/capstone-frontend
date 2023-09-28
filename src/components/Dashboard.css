@@ -1,6 +1,8 @@
 .park-image {
-    max-width: 400px;
-    max-height: 400px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+    max-width: 750px;
+    max-height: 750px;
   }
   
   .image-thumbnails {
