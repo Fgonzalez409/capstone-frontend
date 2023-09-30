@@ -52,13 +52,13 @@ const content = formType === "signup" ? signupContent : signinContent
         <h2>{content.title}</h2>
         <label className={styles.label}>
             Email:
-            <input type="email" onChange={(e) => setEmail(e.target.value)}/>
+            <input type="email" onChange={(e) => setEmail(e.target.value)} required/>
         </label>
 
 
         <label className={styles.label}>
             Password
-            <input type="password" onChange={(e) => setPassword(e.target.value)}/>
+            <input type="password" onChange={(e) => setPassword(e.target.value)} required/>
         </label>
         <input type="submit" value={content.buttonText}/>
     </form>

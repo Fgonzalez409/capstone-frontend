@@ -5,6 +5,10 @@ import Header from './components/Header'
 import AuthForm from './components/Forms/AuthForm'
 import './App.css'
 
+// const signInStatus = () => {
+//   const [isSignedIn, setIsSignedIn] = useState(false)
+// }
+
 const checkAuth = (token) => {
   if(token.length){
     return true
