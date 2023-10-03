@@ -1,4 +1,12 @@
 html {
-    background-color: black;
     color: white;
+}
+#form-container {
+    display: block;
+    width:300px;
+    margin:auto;
+    border: 2px solid black;
+    border-radius: 10px;
+    padding:10px 10px 10px 10px;
+    box-shadow: 5px 5px 10px;
 }

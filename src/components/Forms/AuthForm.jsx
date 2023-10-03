@@ -5,6 +5,7 @@ import axios from "axios"
 
 
 
+
 const signupContent = {
     title: "Signup",
     route: "signup",
@@ -19,7 +20,7 @@ const signinContent = {
 
 
 
-const AuthForm = ({formType = "signin", setToken}) => {
+const AuthForm = ({formType, setToken}) => {
     const navigate = useNavigate()
     const [email,setEmail] = useState("")
     const [password,setPassword] = useState("")
@@ -35,33 +36,37 @@ const content = formType === "signup" ? signupContent : signinContent
         e.preventDefault()
         
 
-    axios.post(`https://capstone-backend-blush.vercel.app/${content.route}`, {
+    axios.post(`https://capstone-backend-blush.vercel.app/signin`, {
         email,
         password
     }).then((res) => {
         if(formType === "signup"){
             setMessage(res.data.message)
-        } else 
+        } else {
+            document.cookie = `token=${res.data.token}`
             setToken(res.data.token)
-            navigate("/")//attempt to navigate to dashboard
+            navigate("/")//navigate to dashboard
+            }
         })
 }
 
   return (
-    <form onSubmit={handleSubmit}>
-        <h2>{content.title}</h2>
-        <label className={styles.label}>
-            Email:
-            <input type="email" onChange={(e) => setEmail(e.target.value)} required/>
-        </label>
+    <div id="form-container">
+        <form onSubmit={handleSubmit}>
+            <h2>{content.title}</h2>
+            <label className={styles.label}>
+                Email:
+                <input type="email" onChange={(e) => setEmail(e.target.value)} required/>
+            </label>
 
 
-        <label className={styles.label}>
-            Password
-            <input type="password" onChange={(e) => setPassword(e.target.value)} required/>
-        </label>
-        <input type="submit" value={content.buttonText}/>
-    </form>
+            <label className={styles.label}>
+                Password
+                <input type="password" onChange={(e) => setPassword(e.target.value)} required/>
+            </label>
+            <input type="submit" value={content.buttonText}/>
+        </form>
+    </div>
   )
 }
 

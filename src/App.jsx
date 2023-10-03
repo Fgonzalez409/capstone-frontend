@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react'
 import {Routes, Route, Navigate} from "react-router-dom"
 import Dashboard from './components/Dashboard'
-import Header from './components/Header'
+import TestHeader from './components/TestHeader'
 import AuthForm from './components/Forms/AuthForm'
+// import { AuthProvider } from './components/Forms/AuthContext'
 import './App.css'
 
-// const signInStatus = () => {
-//   const [isSignedIn, setIsSignedIn] = useState(false)
-// }
+
 
 const checkAuth = (token) => {
   if(token.length){
@@ -26,14 +25,16 @@ function App() {
   const [token, setToken] = useState("")
   return (
     <>
-      <Header/>
-      <Routes>
-        <Route path="/signup" element={<AuthForm formType="signup"/>}/>
-        <Route path="/signin" element={<AuthForm setToken={setToken} formType="signin" />}/>
-        <Route path="/" element={<ProtectedRoute component={Dashboard} token={token}/>}/>
-        {/* <Route path="/" element={ <Dashboard token={token}/>}/> */}
+      {/* <AuthProvider> */}
+        <TestHeader/>
+        <Routes>
+          <Route path="/signup" element={<AuthForm formType="signup"/>}/>
+          <Route path="/signin" element={<AuthForm setToken={setToken} formType="signin" />}/>
+          <Route path="/" element={<ProtectedRoute component={Dashboard} token={token}/>}/>
+          {/* <Route path="/" element={ <Dashboard token={token}/>}/> */}
 
-      </Routes>
+        </Routes>
+      {/* </AuthProvider> */}
     </>
   )
 }

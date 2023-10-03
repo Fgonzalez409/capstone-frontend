@@ -20,3 +20,13 @@
   .image-thumbnails img.selected {
     border: 2px solid blue; /* Highlight the selected thumbnail */
   }
+
+  .dashboard-container {
+    margin-left:20px;
+  }
+
+  button {
+    display: block;
+    margin-top: 20px;
+    margin-bottom:50px;
+  }

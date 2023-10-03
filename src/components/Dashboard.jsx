@@ -1,17 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+// import { useAuth } from './Forms/AuthContext';
+import cookie from "cookie"
 import './Dashboard.css';
 
 const Dashboard = () => {
+
   const [data, setData] = useState([]);
   const [selectedPark, setSelectedPark] = useState('');
   const [images, setImages] = useState([]);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
+  useEffect(()=>{
+    console.log(selectedPark,' hello selected park')
+  },[selectedPark])
+
   const handleDropdown = (event) => {
-    const selectedPark = event.target.value;
-    setSelectedPark(selectedPark);
-    fetchParkImages(selectedPark);
+    const selectedParkName = event.target.value;
+    //gets
+    const selectedParkObject = data.find((park) => park.fullName === selectedParkName);
+    setSelectedPark(selectedParkObject);
+    fetchParkImages(selectedParkName);
   };
 
   // Define a state variable to cache the fetched data
@@ -60,13 +69,52 @@ const Dashboard = () => {
 
   const visitedPark = document.getElementById("selectedPark")
 
-  function savePark() {
-    let p= document.getElementById("selectedPark")
-    let value = p.value
-    var text = p.options[p.selectedIndex].text
 
-    console.log(text)
+
+  const getPark = () => {
+    axios
+    .post('https://capstone-backend-blush.vercel.app/getParks',{
+      user_id,
+    }
+    )
+    .then((response) => {
+      console.log("Park retrieved", response.data)
+      return response.data
+    })
+    .catch((err) => {
+      console.error("Error retrieving", err)
+      throw err
+    })
   }
+
+  const savePark = () => {
+    const cookies = cookie.parse(document.cookie)
+    if (selectedPark && cookies.token) {
+      const { id:park_id } = selectedPark;
+      axios
+        .post('https://capstone-backend-blush.vercel.app/park', {
+          park_id,
+          // Include any other data you want to save
+        }, {
+          headers:{
+            Authorization:`Bearer ${cookies.token}`
+          }
+        })
+        .then((response) => {
+          console.log('Park saved successfully:', response.data);
+          // You can provide feedback to the user here if needed
+        })
+        .catch((error) => {
+          console.error('Error saving park:', error);
+          // Handle the error and provide feedback to the user
+        });
+    } else {
+      console.log('No park selected or user not logged in');
+      // Provide feedback to the user that no park is selected or user not logged in
+    }
+  };
+
+
 
   return (
     <>
@@ -75,6 +123,7 @@ const Dashboard = () => {
           <option value="" disabled>Select a Park</option>
           {data.map((park, i) => (
             <option key={park.id} value={park.fullName}>
+              {/* { console.log(park)} */}
               {park.fullName}
             </option>
           ))}
@@ -100,10 +149,10 @@ const Dashboard = () => {
             />
           </>
         )}
-
+        <button onClick={savePark}>Click to save</button>
       </div>
 
-      <button onClick={savePark}>Click to save</button>
+      
   </>
   );
 };
