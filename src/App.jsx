@@ -3,7 +3,6 @@ import {Routes, Route, Navigate} from "react-router-dom"
 import Dashboard from './components/Dashboard'
 import TestHeader from './components/TestHeader'
 import AuthForm from './components/Forms/AuthForm'
-// import { AuthProvider } from './components/Forms/AuthContext'
 import './App.css'
 
 

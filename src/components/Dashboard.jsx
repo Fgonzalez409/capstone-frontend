@@ -1,30 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-// import { useAuth } from './Forms/AuthContext';
 import cookie from "cookie"
 import './Dashboard.css';
 
 const Dashboard = () => {
 
-  const [data, setData] = useState([]);
-  const [selectedPark, setSelectedPark] = useState('');
-  const [images, setImages] = useState([]);
-  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const [data, setData] = useState([]);//holds the list of national parks
+  const [selectedPark, setSelectedPark] = useState('');//tracks current selected park
+  const [images, setImages] = useState([]);//stores images associated with selected park
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);//tracks index of selected image
+  const [parksData, setParksData] = useState([])
+  const [cachedData, setCachedData] = useState(null);  // Define a state variable to cache the fetched data
 
   useEffect(()=>{
-    console.log(selectedPark,' hello selected park')
+    // console.log(selectedPark,' hello selected park')
   },[selectedPark])
 
   const handleDropdown = (event) => {
     const selectedParkName = event.target.value;
-    //gets
     const selectedParkObject = data.find((park) => park.fullName === selectedParkName);
     setSelectedPark(selectedParkObject);
     fetchParkImages(selectedParkName);
   };
 
-  // Define a state variable to cache the fetched data
-  const [cachedData, setCachedData] = useState(null);
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -48,7 +47,6 @@ const Dashboard = () => {
         }
       }
     };
-
     fetchData();
   }, [cachedData]);
 
@@ -71,20 +69,19 @@ const Dashboard = () => {
 
 
 
-  const getPark = () => {
-    axios
-    .post('https://capstone-backend-blush.vercel.app/getParks',{
+  const getPark = async(user_id) => {
+    try {
+      const response = await axios.post('https://capstone-backend-blush.vercel.app/getParks',{
       user_id,
-    }
-    )
-    .then((response) => {
-      console.log("Park retrieved", response.data)
-      return response.data
     })
-    .catch((err) => {
-      console.error("Error retrieving", err)
+    
+      const saveParksData = response.data
+      setParksData(saveParksData)
+      console.log("saved parks dat", saveParksData)
+  } catch(err)  {
+      // console.error("Error retrieving", err)
       throw err
-    })
+    }
   }
 
   const savePark = () => {
@@ -123,7 +120,6 @@ const Dashboard = () => {
           <option value="" disabled>Select a Park</option>
           {data.map((park, i) => (
             <option key={park.id} value={park.fullName}>
-              {/* { console.log(park)} */}
               {park.fullName}
             </option>
           ))}
@@ -150,9 +146,23 @@ const Dashboard = () => {
           </>
         )}
         <button onClick={savePark}>Click to save</button>
-      </div>
+        <br />
+        <button onClick={getPark}>Cick to display parks</button>
+        {console.log({getPark})}
 
-      
+        {parksData.length > 0 && (
+          <div className='savedParks'>
+            <h2>Saved Parks</h2>
+              <ul>
+                {parksData.map((park, index) => (
+                  <li key={index}>
+                    <strong>{park.fullName}</strong>
+                  </li>
+                ))}
+              </ul>
+          </div>
+        )}
+      </div>
   </>
   );
 };

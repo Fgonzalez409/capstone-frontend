@@ -28,10 +28,6 @@ const AuthForm = ({formType, setToken}) => {
 
 const content = formType === "signup" ? signupContent : signinContent
 
-    // useEffect(() => {
-    //     console.log({message})
-    // },[message])
-
     const handleSubmit = (e) => {
         e.preventDefault()
         
