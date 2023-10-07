@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import cookie from "cookie"
+import getMySavedParks from './getMySavedParks';
 import './Dashboard.css';
 
 const Dashboard = () => {
@@ -8,8 +9,9 @@ const Dashboard = () => {
   const [data, setData] = useState([]);//holds the list of national parks
   const [selectedPark, setSelectedPark] = useState('');//tracks current selected park
   const [images, setImages] = useState([]);//stores images associated with selected park
-  const [selectedImageIndex, setSelectedImageIndex] = useState(0);//tracks index of selected image
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);//tracks index of selected image    const [parksData, setParksData] = useState([])
   const [parksData, setParksData] = useState([])
+  
   const [cachedData, setCachedData] = useState(null);  // Define a state variable to cache the fetched data
 
   useEffect(()=>{
@@ -69,28 +71,23 @@ const Dashboard = () => {
 
 
 
-  const getPark = async(user_id) => {
+  const getSavedParks = async() => {
     try {
-      const response = await axios.post('https://capstone-backend-blush.vercel.app/getParks',{
-      user_id,
-    })
-    
-      const saveParksData = response.data
-      setParksData(saveParksData)
-      console.log("saved parks dat", saveParksData)
-  } catch(err)  {
-      // console.error("Error retrieving", err)
-      throw err
+      const savedParksData = await getMySavedParks()
+      setParksData(savedParksData)
+      console.log("saved parks data", savedParksData)
+    }catch (err){
+      console.error("Error retrieving park",err)
     }
   }
 
   const savePark = () => {
     const cookies = cookie.parse(document.cookie)
     if (selectedPark && cookies.token) {
-      const { id:park_id } = selectedPark;
+      const { parkCode:parkCode } = selectedPark;
       axios
         .post('https://capstone-backend-blush.vercel.app/park', {
-          park_id,
+          parkCode,
           // Include any other data you want to save
         }, {
           headers:{
@@ -147,8 +144,8 @@ const Dashboard = () => {
         )}
         <button onClick={savePark}>Click to save</button>
         <br />
-        <button onClick={getPark}>Cick to display parks</button>
-        {console.log({getPark})}
+        <button onClick={getSavedParks}>Cick to display parks</button>
+        
 
         {parksData.length > 0 && (
           <div className='savedParks'>
@@ -168,24 +165,3 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

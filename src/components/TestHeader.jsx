@@ -13,12 +13,33 @@ import ListItemText from '@mui/material/ListItemText';
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
+import Button from '@mui/material/Button'
+import { useNavigate } from 'react-router-dom';
+
 
 const drawerWidth = 240;
-const navItems = ['Dashboard',  'Sign Out'];
+const navItems = ['Dashboard','My Parks',  'Sign Out'];
 
 function DrawerAppBar(props) {
+
+  const navigate = useNavigate()
+
+  const handleNavBar = (item) => {
+    if(item === "Dashboard"){
+      console.log("in dashboard")
+      navigate("/Dashboard")
+    }
+     
+    else if (item === "My Parks"){
+      console.log("in dashboard")
+      navigate("getSavedParks")
+    }
+    
+    else 
+      navigate("/signin")
+  }
+
+
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
@@ -35,7 +56,7 @@ function DrawerAppBar(props) {
       <List>
         {navItems.map((item) => (
           <ListItem key={item} disablePadding>
-            <ListItemButton sx={{ textAlign: 'center' }}>
+            <ListItemButton sx={{ textAlign: 'center'  }} onClick={() => handleNavBar(item)}>
               <ListItemText primary={item} />
             </ListItemButton>
           </ListItem>
