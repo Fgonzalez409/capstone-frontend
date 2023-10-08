@@ -8,8 +8,8 @@ const Dashboard = () => {
 
   const [data, setData] = useState([]);//holds the list of national parks
   const [selectedPark, setSelectedPark] = useState('');//tracks current selected park
-  const [images, setImages] = useState([]);//stores images associated with selected park
-  const [selectedImageIndex, setSelectedImageIndex] = useState(0);//tracks index of selected image    const [parksData, setParksData] = useState([])
+  // const [images, setImages] = useState([]);//stores images associated with selected park
+  // const [selectedImageIndex, setSelectedImageIndex] = useState(0);//tracks index of selected image
   const [cachedData, setCachedData] = useState(null);  // Define a state variable to cache the fetched data
   const [parksData, setParksData] = useState([])//my saved parks 
   useEffect(()=>{
@@ -117,58 +117,29 @@ const Dashboard = () => {
 
 
 
+  const parksPerRow = 3; // Number of parks to display per row
+
   return (
     <>
       <div className="dashboard-container">
-        <select id="selectedPark" value={selectedPark} onChange={handleDropdown}>
-          <option value="" disabled>Select a Park</option>
-          {data.map((park, i) => (
-            <option key={park.id} value={park.fullName}>
-              {park.fullName}
-            </option>
-          ))}
-        </select>
-
-        {images.length > 0 && (
-          <>
-            <div className="image-thumbnails">
-              {images.map((image, index) => (
-                <img
-                  key={index}
-                  src={image.url}
-                  alt={`Image ${index + 1}`}
-                  className={index === selectedImageIndex ? 'selected' : ''}
-                  onClick={() => handleImageChange(index)}
-                />
-              ))}
+        <div className="park-list">
+          {data.map((park, index) => (
+            <div key={park.id} className="park-item">
+              <img
+                src={park.images[0].url} // Assuming the first image is used as a preview
+                alt={`Park ${park.fullName}`}
+                className="park-image"
+              />
+              <h3>{park.fullName}</h3>
+              <button onClick={() => handleImageChange(index)}>View Images</button>
+              {/* Add more details/buttons as needed */}
             </div>
-            <img
-              src={images[selectedImageIndex].url}
-              alt={`Selected Park`}
-              className="park-image"
-            />
-          </>
-        )}
-        <button onClick={savePark}>Click to save</button>
-        <br />
-        <button onClick={getPark}>Cick to display parks</button>
-        
-
-        {parksData.length > 0 && (
-          <div className='savedParks'>
-            <h2>Saved Parks</h2>
-              <ul>
-                {parksData.map((park, index) => (
-                  <li key={index}>
-                    <strong>{park.fullName}</strong>
-                  </li>
-                ))}
-              </ul>
-          </div>
-        )}
+          ))}
+        </div>
       </div>
-  </>
+    </>
   );
 };
+
 
 export default Dashboard;

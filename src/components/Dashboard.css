@@ -30,3 +30,18 @@
     margin-top: 20px;
     margin-bottom:50px;
   }
+
+  .park-item {
+    width: calc(33.33% - 20px); /* 20px is the total margin and padding space between items */
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: center;
+    display: inline-block;
+  }
+  
+  .park-image {
+    width: 400px; /* Set the width of the park image */
+    height: 400px; /* Set the height of the park image */
+    object-fit: cover; /* Ensure the image covers the specified dimensions */
+  }
