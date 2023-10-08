@@ -11,7 +11,7 @@ const Dashboard = () => {
   const [images, setImages] = useState([]);//stores images associated with selected park
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);//tracks index of selected image    const [parksData, setParksData] = useState([])
   const [cachedData, setCachedData] = useState(null);  // Define a state variable to cache the fetched data
-  const [parksData, setParksData] = useState([])
+  const [parksData, setParksData] = useState([])//my saved parks 
   useEffect(()=>{
     // console.log(selectedPark,' hello selected park')
   },[selectedPark])
