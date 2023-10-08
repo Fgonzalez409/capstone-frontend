@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import cookie from "cookie"
-import getMySavedParks from './getMySavedParks';
+// import getSavedParks from './getSavedParks';
 import './Dashboard.css';
 
 const Dashboard = () => {
@@ -10,10 +10,8 @@ const Dashboard = () => {
   const [selectedPark, setSelectedPark] = useState('');//tracks current selected park
   const [images, setImages] = useState([]);//stores images associated with selected park
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);//tracks index of selected image    const [parksData, setParksData] = useState([])
-  const [parksData, setParksData] = useState([])
-  
   const [cachedData, setCachedData] = useState(null);  // Define a state variable to cache the fetched data
-
+  const [parksData, setParksData] = useState([])
   useEffect(()=>{
     // console.log(selectedPark,' hello selected park')
   },[selectedPark])
@@ -71,13 +69,22 @@ const Dashboard = () => {
 
 
 
-  const getSavedParks = async() => {
+  const getPark = async() => {
+    const cookies = cookie.parse(document.cookie)
+    console.log(cookies.token)
     try {
-      const savedParksData = await getMySavedParks()
-      setParksData(savedParksData)
-      console.log("saved parks data", savedParksData)
-    }catch (err){
-      console.error("Error retrieving park",err)
+      const response = await axios.get('https://capstone-backend-blush.vercel.app/getParks',{
+        headers:{
+          Authorization:`Bearer ${cookies.token}`
+        }
+    })
+    
+      const saveParksData = response.data
+      setParksData(saveParksData)
+      console.log("saved parks dat", saveParksData)
+  } catch(err)  {
+      // console.error("Error retrieving", err)
+      throw err
     }
   }
 
@@ -144,7 +151,7 @@ const Dashboard = () => {
         )}
         <button onClick={savePark}>Click to save</button>
         <br />
-        <button onClick={getSavedParks}>Cick to display parks</button>
+        <button onClick={getPark}>Cick to display parks</button>
         
 
         {parksData.length > 0 && (
