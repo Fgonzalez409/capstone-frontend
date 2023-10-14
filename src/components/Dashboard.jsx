@@ -8,47 +8,39 @@ const Dashboard = () => {
 
   const [data, setData] = useState([]);//holds the list of national parks
   const [selectedPark, setSelectedPark] = useState('');//tracks current selected park
-  // const [images, setImages] = useState([]);//stores images associated with selected park
-  // const [selectedImageIndex, setSelectedImageIndex] = useState(0);//tracks index of selected image
+  const [showImages, setShowImages] = useState([]);//stores images associated with selected park
+  const [images, setImages] = useState([])
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);//tracks index of selected image
   const [cachedData, setCachedData] = useState(null);  // Define a state variable to cache the fetched data
   const [parksData, setParksData] = useState([])//my saved parks 
+
   useEffect(()=>{
     // console.log(selectedPark,' hello selected park')
   },[selectedPark])
 
-  const handleDropdown = (event) => {
-    const selectedParkName = event.target.value;
-    const selectedParkObject = data.find((park) => park.fullName === selectedParkName);
-    setSelectedPark(selectedParkObject);
-    fetchParkImages(selectedParkName);
-  };
+
 
 
 
   useEffect(() => {
     const fetchData = async () => {
-      // Check if data is already cached
-      if (cachedData) {
-        setData(cachedData);
-      } else {
-        try {
-          const response = await axios.get(
-            `https://developer.nps.gov/api/v1/parks?&api_key=yAIutPvgJDxgqt83ZQLp8WCKfrmMtQ5BDQE7x9iG`
-          );
-
-          const fetchedData = response.data.data;
-
-          // Cache the fetched data
-          setCachedData(fetchedData);
-
-          setData(fetchedData);
-        } catch (error) {
-          console.error('Error fetching park data:', error);
-        }
+      try {
+        const response = await axios.get(
+          `https://developer.nps.gov/api/v1/parks?&api_key=yAIutPvgJDxgqt83ZQLp8WCKfrmMtQ5BDQE7x9iG`
+        );
+        setData(response.data.data);
+      } catch (error) {
+        console.error('Error fetching park data:', error);
       }
     };
     fetchData();
-  }, [cachedData]);
+  }, []);
+
+  const handleViewImages = (park) => {
+    setSelectedPark(park);
+    fetchParkImages(park.fullName)
+    setShowImages(true)
+  };
 
   const fetchParkImages = (parkName) => {
     const selectedParkData = data.find((park) => park.fullName === parkName);
@@ -61,11 +53,9 @@ const Dashboard = () => {
     }
   };
 
-  const handleImageChange = (index) => {
-    setSelectedImageIndex(index);
+  const handleImageChange = (park) => {
+    setSelectedPark(park);
   };
-
-  const visitedPark = document.getElementById("selectedPark")
 
 
 
@@ -115,29 +105,30 @@ const Dashboard = () => {
     }
   };
 
-
-
-  const parksPerRow = 3; // Number of parks to display per row
-
   return (
-    <>
-      <div className="dashboard-container">
-        <div className="park-list">
-          {data.map((park, index) => (
-            <div key={park.id} className="park-item">
-              <img
-                src={park.images[0].url} // Assuming the first image is used as a preview
-                alt={`Park ${park.fullName}`}
-                className="park-image"
-              />
-              <h3>{park.fullName}</h3>
-              <button onClick={() => handleImageChange(index)}>View Images</button>
-              {/* Add more details/buttons as needed */}
-            </div>
-          ))}
-        </div>
+    <div className="dashboard-container">
+      <div className="park-list">
+        {data.map((park) => (
+          <div key={park.id} className="park-item">
+            <h3>{park.fullName}</h3>
+            <button onClick={() => handleViewImages(park)}>View Images</button>
+            {/* Add more details/buttons as needed */}
+          </div>
+        ))}
       </div>
-    </>
+
+      {/* Conditional rendering of images */}
+      {showImages && selectedPark && (
+        <div className="selected-park-images">
+          <h2>{selectedPark.fullName} Images</h2>
+          {images.length > 0 ? (
+            <img src={images[selectedImageIndex].url} alt={`Park ${selectedImageIndex + 1}`} />
+          ) : (
+            <p>No images available for this park.</p>
+          )}
+        </div>
+      )}
+    </div>
   );
 };
 

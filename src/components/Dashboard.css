@@ -45,3 +45,27 @@
     height: 400px; /* Set the height of the park image */
     object-fit: cover; /* Ensure the image covers the specified dimensions */
   }
+
+  .selected-park-images {
+    padding: 20px;
+    background-color: #f7f7f7;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 20px;
+  }
+  
+  .selected-park-images h2 {
+    font-size: 24px;
+    margin-bottom: 15px;
+  }
+  
+  .selected-park-images img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+  }
+  
+  .selected-park-images p {
+    font-size: 16px;
+    color: #555;
+  }
