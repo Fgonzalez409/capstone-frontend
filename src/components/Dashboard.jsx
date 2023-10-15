@@ -38,9 +38,10 @@ const Dashboard = () => {
 
   const handleViewImages = (park) => {
     setSelectedPark(park);
-    fetchParkImages(park.fullName)
-    setShowImages(true)
+    fetchParkImages(park.fullName);
+    setShowImages(true);
   };
+
 
   const fetchParkImages = (parkName) => {
     const selectedParkData = data.find((park) => park.fullName === parkName);
@@ -53,9 +54,9 @@ const Dashboard = () => {
     }
   };
 
-  const handleImageChange = (park) => {
-    setSelectedPark(park);
-  };
+  // const handleImageChange = (park) => {
+  //   setSelectedPark(park);
+  // };
 
 
 
@@ -112,12 +113,10 @@ const Dashboard = () => {
           <div key={park.id} className="park-item">
             <h3>{park.fullName}</h3>
             <button onClick={() => handleViewImages(park)}>View Images</button>
-            {/* Add more details/buttons as needed */}
           </div>
         ))}
       </div>
 
-      {/* Conditional rendering of images */}
       {showImages && selectedPark && (
         <div className="selected-park-images">
           <h2>{selectedPark.fullName} Images</h2>
