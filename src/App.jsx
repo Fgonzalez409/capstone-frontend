@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
-import {Routes, Route, Navigate} from "react-router-dom"
+import {Routes, Route, Navigate, Link} from "react-router-dom"
 import Dashboard from './components/Dashboard'
 import TestHeader from './components/TestHeader'
-// import getMySavedParks from './components/getMySavedParks'
+import getMySavedParks from './components/getMySavedParks'
 import AuthForm from './components/Forms/AuthForm'
 import './App.css'
 
@@ -26,11 +26,17 @@ function App() {
   return (
     <>
         <TestHeader/>
+        {!token && (
+          <>
+            <Link to="/signup">Signup form</Link>
+            <Link to="/signin">Signin form</Link>
+          </>
+        )}
         <Routes>
           <Route path="/signup" element={<AuthForm formType="signup"/>}/>
           <Route path="/signin" element={<AuthForm setToken={setToken} formType="signin" />}/>
           <Route path="/" element={<ProtectedRoute component={Dashboard} token={token}/>}/>
-          {/* <Route path="/getSavedParks" element={<getSavedParks/>}/> */}
+          <Route path="/getMySavedParks" element={<getMySavedParks/>}/>
           
           {/* <Route path="/" element={ <Dashboard token={token}/>}/> */}
 

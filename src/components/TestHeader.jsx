@@ -7,6 +7,7 @@ import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
+import { Link } from 'react-router-dom';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
@@ -27,12 +28,12 @@ function DrawerAppBar(props) {
   const handleNavBar = (item) => {
     if(item === "Dashboard"){
       console.log("in dashboard")
-      navigate("/Dashboard")
+      navigate("/")
     }
      
     else if (item === "My Parks"){
       console.log("in dashboard")
-      navigate("getSavedParks")
+      navigate("/getMySavedParks")
     }
     
     else 
@@ -88,6 +89,12 @@ function DrawerAppBar(props) {
           >
             National Parks
           </Typography>
+          {/* <Button
+            color="inherit"
+            onClick={() => handleNavBar("/")}
+            >
+            New Dashboard button that will be added once routes are fixed
+          </Button> */}
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
             {navItems.map((item) => (
               <Button key={item} sx={{ color: '#fff' }}>
@@ -117,10 +124,12 @@ function DrawerAppBar(props) {
       <Box component="main" sx={{ p: 3 }}>
         <Toolbar />
         <Typography>
-          
+          {/* <li><Link to="/">Dashboard</Link></li> */}
         </Typography>
       </Box>
+      
     </Box>
+    
   );
 }
 

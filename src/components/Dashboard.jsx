@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import cookie from "cookie"
-// import getSavedParks from './getSavedParks';
+// import getMySavedParks from './getMySavedParks';
 import './Dashboard.css';
 
 const Dashboard = () => {
@@ -11,8 +11,6 @@ const Dashboard = () => {
   const [showImages, setShowImages] = useState(false);
   const [mainImage, setMainImage] = useState(null);
   const [thumbnailImages, setThumbnailImages] = useState([]);
-  const [images, setImages] = useState([])
-  const [selectedImageIndex, setSelectedImageIndex] = useState(0);//tracks index of selected image
   const [cachedData, setCachedData] = useState(null);  // Define a state variable to cache the fetched data
   const [parksData, setParksData] = useState([])//my saved parks 
 
@@ -57,8 +55,16 @@ const Dashboard = () => {
   //   }
   // };
 
-
-
+  // const handleToggleSavedParks = async () => {
+  //   try {
+  //     const savedParks = await getMySavedParks(); // Fetch saved parks data
+  //     setParksData(savedParks); // Update state with saved parks data
+  //   } catch (error) {
+  //     console.error('Error fetching saved parks:', error);
+  //     // Handle error (e.g., show error message to the user)
+  //   }
+  //   setShowSavedParks(!showSavedParks); // Toggle showSavedParks state to display saved parks
+  // };
   
 
   const getPark = async() => {
