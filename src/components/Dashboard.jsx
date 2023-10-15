@@ -16,10 +16,6 @@ const Dashboard = () => {
   const [cachedData, setCachedData] = useState(null);  // Define a state variable to cache the fetched data
   const [parksData, setParksData] = useState([])//my saved parks 
 
-  // useEffect(()=>{
-  //   // console.log(selectedPark,' hello selected park')
-  // },[selectedPark])
-
 
 
 
@@ -50,16 +46,16 @@ const Dashboard = () => {
     setShowImages(true);
   };
 
-  const fetchParkImages = (parkName) => {
-    const selectedParkData = data.find((park) => park.fullName === parkName);
+  // const fetchParkImages = (parkName) => {
+  //   const selectedParkData = data.find((park) => park.fullName === parkName);
 
-    if (selectedParkData && selectedParkData.images.length > 0) {
-      setImages(selectedParkData.images);
-      setSelectedImageIndex(0);
-    } else {
-      setImages([]);
-    }
-  };
+  //   if (selectedParkData && selectedParkData.images.length > 0) {
+  //     setImages(selectedParkData.images);
+  //     setSelectedImageIndex(0);
+  //   } else {
+  //     setImages([]);
+  //   }
+  // };
 
 
 
