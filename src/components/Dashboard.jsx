@@ -6,17 +6,19 @@ import './Dashboard.css';
 
 const Dashboard = () => {
 
-  const [data, setData] = useState([]);//holds the list of national parks
-  const [selectedPark, setSelectedPark] = useState('');//tracks current selected park
-  const [showImages, setShowImages] = useState([]);//stores images associated with selected park
+  const [data, setData] = useState([]);//Stores the list of parks fetched from the API.
+  const [selectedPark, setSelectedPark] = useState(null);
+  const [showImages, setShowImages] = useState(false);
+  const [mainImage, setMainImage] = useState(null);
+  const [thumbnailImages, setThumbnailImages] = useState([]);
   const [images, setImages] = useState([])
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);//tracks index of selected image
   const [cachedData, setCachedData] = useState(null);  // Define a state variable to cache the fetched data
   const [parksData, setParksData] = useState([])//my saved parks 
 
-  useEffect(()=>{
-    // console.log(selectedPark,' hello selected park')
-  },[selectedPark])
+  // useEffect(()=>{
+  //   // console.log(selectedPark,' hello selected park')
+  // },[selectedPark])
 
 
 
@@ -37,11 +39,16 @@ const Dashboard = () => {
   }, []);
 
   const handleViewImages = (park) => {
-    setSelectedPark(park);
-    fetchParkImages(park.fullName);
+    if (park.images && park.images.length > 0) {
+      setMainImage(park.images[0].url);
+      setThumbnailImages(park.images.slice(1).map(image => image.url));
+    } else {
+      setMainImage(null);
+      setThumbnailImages([]);
+    }
+    setSelectedPark(park); // Update the selected park here
     setShowImages(true);
   };
-
 
   const fetchParkImages = (parkName) => {
     const selectedParkData = data.find((park) => park.fullName === parkName);
@@ -54,11 +61,9 @@ const Dashboard = () => {
     }
   };
 
-  // const handleImageChange = (park) => {
-  //   setSelectedPark(park);
-  // };
 
 
+  
 
   const getPark = async() => {
     const cookies = cookie.parse(document.cookie)
@@ -113,6 +118,7 @@ const Dashboard = () => {
           <div key={park.id} className="park-item">
             <h3>{park.fullName}</h3>
             <button onClick={() => handleViewImages(park)}>View Images</button>
+            <button onClick={() => savePark()}>Save Park</button>
           </div>
         ))}
       </div>
@@ -120,11 +126,18 @@ const Dashboard = () => {
       {showImages && selectedPark && (
         <div className="selected-park-images">
           <h2>{selectedPark.fullName} Images</h2>
-          {images.length > 0 ? (
-            <img src={images[selectedImageIndex].url} alt={`Park ${selectedImageIndex + 1}`} />
-          ) : (
-            <p>No images available for this park.</p>
-          )}
+          {mainImage && <img src={mainImage} alt={`Main Park`} className="main-image" />}
+          <div className="thumbnail-container">
+            {thumbnailImages.map((thumbnail, index) => (
+              <img
+                key={index}
+                src={thumbnail}
+                alt={`Thumbnail ${index + 1}`}
+                onClick={() => setMainImage(thumbnail)}
+                className="thumbnail"
+              />
+            ))}
+          </div>
         </div>
       )}
     </div>
