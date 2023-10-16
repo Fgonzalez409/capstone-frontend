@@ -1,18 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import cookie from "cookie"
-// import getMySavedParks from './getMySavedParks';
+// import getSavedParks from './getSavedParks';
 import './Dashboard.css';
-
+import { Sledding } from '@mui/icons-material';
 const Dashboard = () => {
-
   const [data, setData] = useState([]);//Stores the list of parks fetched from the API.
   const [selectedPark, setSelectedPark] = useState(null);
   const [showImages, setShowImages] = useState(false);
   const [mainImage, setMainImage] = useState(null);
   const [thumbnailImages, setThumbnailImages] = useState([]);
+  const [selectedImageDescription, setSelectedImageDescription] = useState('');
+  const [parkImages, setParkImages] = useState({});
+  const [comment, setComment] = useState('');
+
+
+
+  const [images, setImages] = useState([])
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);//tracks index of selected image
   const [cachedData, setCachedData] = useState(null);  // Define a state variable to cache the fetched data
-  const [parksData, setParksData] = useState([])//my saved parks 
 
 
 
@@ -32,41 +38,46 @@ const Dashboard = () => {
     fetchData();
   }, []);
 
+
   const handleViewImages = (park) => {
     if (park.images && park.images.length > 0) {
-      setMainImage(park.images[0].url);
-      setThumbnailImages(park.images.slice(1).map(image => image.url));
+      const mainImage = park.images[0].url;
+      const thumbnailImages = park.images.slice(1).map(image => image.url);
+  
+      setSelectedPark(park);
+      setThumbnailImages(thumbnailImages);
+      setSelectedImageIndex(0);
+  
+      if (park.images[0].title) {
+        setSelectedImageDescription(park.images[0].title);
+      } else {
+        setSelectedImageDescription('No description available');
+      }
     } else {
+      // If the selected park has no images
+      setSelectedPark(null);
       setMainImage(null);
       setThumbnailImages([]);
+      setSelectedImageDescription('No images available');
     }
-    setSelectedPark(park); // Update the selected park here
+  
     setShowImages(true);
   };
 
-  // const fetchParkImages = (parkName) => {
-  //   const selectedParkData = data.find((park) => park.fullName === parkName);
 
-  //   if (selectedParkData && selectedParkData.images.length > 0) {
-  //     setImages(selectedParkData.images);
-  //     setSelectedImageIndex(0);
-  //   } else {
-  //     setImages([]);
-  //   }
-  // };
 
-  // const handleToggleSavedParks = async () => {
-  //   try {
-  //     const savedParks = await getMySavedParks(); // Fetch saved parks data
-  //     setParksData(savedParks); // Update state with saved parks data
-  //   } catch (error) {
-  //     console.error('Error fetching saved parks:', error);
-  //     // Handle error (e.g., show error message to the user)
-  //   }
-  //   setShowSavedParks(!showSavedParks); // Toggle showSavedParks state to display saved parks
-  // };
+  const handleCommentChange = (event) => {
+    setComment(event.target.value);
+  };
+
+
+  const submitComment = () => {
+    // You can perform actions with the comment, e.g., send it to the server, save it in state, etc.
+    console.log('Submitted Comment:', comment);
+    // Clear the comment input field after submission
+    setComment('');
+  }
   
-
   const getPark = async() => {
     const cookies = cookie.parse(document.cookie)
     console.log(cookies.token)
@@ -85,7 +96,6 @@ const Dashboard = () => {
       throw err
     }
   }
-
   const savePark = () => {
     const cookies = cookie.parse(document.cookie)
     if (selectedPark && cookies.token) {
@@ -112,39 +122,86 @@ const Dashboard = () => {
       // Provide feedback to the user that no park is selected or user not logged in
     }
   };
-
   return (
     <div className="dashboard-container">
       <div className="park-list">
         {data.map((park) => (
           <div key={park.id} className="park-item">
             <h3>{park.fullName}</h3>
+            {park.images && park.images.length > 0 && (
+              <img
+                src={park.images[0].url}
+                alt={`First Park`}
+                className="first-park-image"
+              />
+            )}
+          {showImages && selectedPark && selectedPark.id === park.id && (
+              <div className="selected-park-images">
+                  {mainImage && <img src={mainImage} alt={`Main Park`} className="main-image" />}
+                  <p>{selectedImageDescription}</p>
+
+
+                  <div className="thumbnail-container">
+                      {thumbnailImages.map((thumbnail, index) => (
+                          <img
+                              key={index}
+                              src={thumbnail}
+                              alt={`Thumbnail ${index + 1}`}
+                              onClick={() => setMainImage(thumbnail)}
+                              className="thumbnail"
+                          />
+                      ))}
+                  </div>
+
+                  <div className="comments-section">
+                    <input
+                      type="text"
+                      placeholder="Add your comment..."
+                      value={comment}
+                      onChange={handleCommentChange}
+                      className="comment-input"
+                    />
+                    <button onClick={submitComment} className="comment-submit-button">
+                      Submit Comment
+                    </button>
+                </div>
+              </div>
+            )}
             <button onClick={() => handleViewImages(park)}>View Images</button>
             <button onClick={() => savePark()}>Save Park</button>
           </div>
         ))}
       </div>
-
-      {showImages && selectedPark && (
-        <div className="selected-park-images">
-          <h2>{selectedPark.fullName} Images</h2>
-          {mainImage && <img src={mainImage} alt={`Main Park`} className="main-image" />}
-          <div className="thumbnail-container">
-            {thumbnailImages.map((thumbnail, index) => (
-              <img
-                key={index}
-                src={thumbnail}
-                alt={`Thumbnail ${index + 1}`}
-                onClick={() => setMainImage(thumbnail)}
-                className="thumbnail"
-              />
-            ))}
-          </div>
-        </div>
-      )}
+      
     </div>
   );
 };
+export default Dashboard; 
 
 
-export default Dashboard;
+
+
+
+
+
+
+
+// const fetchParkImages = (parkName) => {
+  //   const selectedParkData = data.find((park) => park.fullName === parkName);
+  // // const fetchParkImages = (parkName) => {
+  // //   const selectedParkData = data.find((park) => park.fullName === parkName);
+
+  //   if (selectedParkData && selectedParkData.images.length > 0) {
+  //     setImages(selectedParkData.images);
+  //     setSelectedImageIndex(0);
+  //   } else {
+  //     setImages([]);
+  //   }
+  // };
+  // //   if (selectedParkData && selectedParkData.images.length > 0) {
+  // //     setImages(selectedParkData.images);
+  // //     setSelectedImageIndex(0);
+  // //   } else {
+  // //     setImages([]);
+  // //   }
+  // // };
