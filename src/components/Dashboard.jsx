@@ -12,7 +12,7 @@ const Dashboard = () => {
   const [thumbnailImages, setThumbnailImages] = useState([]);
   const [selectedImageDescription, setSelectedImageDescription] = useState('');
   const [parkImages, setParkImages] = useState({});
-  const [comment, setComment] = useState('');
+  const [comments, setComments] = useState('');
 
 
 
@@ -66,36 +66,50 @@ const Dashboard = () => {
 
 
 
-  const handleCommentChange = (event) => {
-    setComment(event.target.value);
+  const handleCommentChange = (event, parkId) => {
+    // Update the comments state for the specific park ID
+    setComments((prevComments) => ({
+      ...prevComments,
+      [parkId]: event.target.value,
+    }));
   };
 
 
-  const submitComment = () => {
-    // You can perform actions with the comment, e.g., send it to the server, save it in state, etc.
-    console.log('Submitted Comment:', comment);
+  const submitComment = (parkId) => {
+    // Get the comment for the specific park ID
+    const comment = comments[parkId];
+    
+    // Handle the comment for the specific park (e.g., send it to the server, etc.)
+    console.log(`Submitted Comment for Park ${parkId}:`, comment);
+    
     // Clear the comment input field after submission
-    setComment('');
-  }
+    setComments((prevComments) => ({
+      ...prevComments,
+      [parkId]: '', // Clear the comment for the specific park ID
+    }));
+  };
   
   const getPark = async() => {
     const cookies = cookie.parse(document.cookie)
-    console.log(cookies.token)
-    try {
-      const response = await axios.get('https://capstone-backend-blush.vercel.app/getParks',{
-        headers:{
-          Authorization:`Bearer ${cookies.token}`
-        }
-    })
-    
-      const saveParksData = response.data
-      setParksData(saveParksData)
-      console.log("saved parks dat", saveParksData)
-  } catch(err)  {
-      // console.error("Error retrieving", err)
-      throw err
+    if(cookies.token){
+      console.log(cookies.token)
+      try {
+        const response = await axios.get('https://capstone-backend-blush.vercel.app/getParks',{
+          headers:{
+            Authorization:`Bearer ${cookies.token}`
+          }
+      })
+      
+        const saveParksData = response.data
+        setParksData(saveParksData)
+        console.log("saved parks dat", saveParksData)
+    } catch(err)  {
+        // console.error("Error retrieving", err)
+        throw err
+      }
     }
   }
+
   const savePark = () => {
     const cookies = cookie.parse(document.cookie)
     if (selectedPark && cookies.token) {
@@ -112,6 +126,7 @@ const Dashboard = () => {
         .then((response) => {
           console.log('Park saved successfully:', response.data);
           // You can provide feedback to the user here if needed
+          alert("park saved successfully")
         })
         .catch((error) => {
           console.error('Error saving park:', error);
@@ -135,6 +150,24 @@ const Dashboard = () => {
                 className="first-park-image"
               />
             )}
+
+            <div className="comment-box">
+              {/* Input field for adding comments */}
+              <input
+                type="text"
+                placeholder="Add your comment..."
+                value={comments[park.id] || ''} // Use comments[park.id] as the value
+                onChange={(event) => handleCommentChange(event, park.id)}
+                className="comment-input"
+              />
+              {/* Button to submit comments */}
+              <button onClick={() => submitComment(park.id)} className="comment-submit-button">
+                Submit Comment
+              </button>
+            </div>
+
+            {comments[park.id] && <p>Comment: {comments[park.id]}</p>}
+              
           {showImages && selectedPark && selectedPark.id === park.id && (
               <div className="selected-park-images">
                   {mainImage && <img src={mainImage} alt={`Main Park`} className="main-image" />}
@@ -153,18 +186,18 @@ const Dashboard = () => {
                       ))}
                   </div>
 
-                  <div className="comments-section">
+                  {/* <div className="comments-section">
                     <input
                       type="text"
                       placeholder="Add your comment..."
-                      value={comment}
+                      value={comments}
                       onChange={handleCommentChange}
                       className="comment-input"
                     />
                     <button onClick={submitComment} className="comment-submit-button">
                       Submit Comment
                     </button>
-                </div>
+                  </div> */}
               </div>
             )}
             <button onClick={() => handleViewImages(park)}>View Images</button>
