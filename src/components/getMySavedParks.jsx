@@ -1,23 +1,46 @@
 import axios from 'axios'
-import cookie from "cookie"
+import React, { useState, useEffect } from 'react';
 
 
-const getMySavedParks = async () => {
+const GetMySavedParks = () => {
+  const [savedPark, setSavedPark] = useState(null);
+  const [error, setError] = useState(null);
 
-    const cookies = cookie.parse(document.cookie)
-        console.log(cookies.token)
-        try {
-          const response = await axios.get('https://capstone-backend-blush.vercel.app/getSavedParks',{
-            headers:{
-              Authorization:`Bearer ${cookies.token}`
-            }
-        })
-          const savedParksData = response.data
-          return savedParksData
-      } catch(err)  {
-          throw err
-        }
+  useEffect(() => {
+    axios
+      .get(`https://capstone-backend-blush.vercel.app/getSavedParks`)
+      .then((response) => {
+        const retrievedPark = response.data;
+        console.log('Park retrieved successfully:', retrievedPark);
+        console.log("API response", response)
+        setSavedPark(retrievedPark);
+      })
+      .catch((error) => {
+        console.error('Error retrieving park fe:', error);
+        setError(error);
+      });
+  }, []); // Empty dependency array means this effect runs once after the initial render
+
+  if (error) {
+    return <div>Error retrieving park: {error.message}</div>;
+  }
+
+  return (
+    <div>
+      {savedPark ? (
+        <div id="park-info-container">
+          <h2>{savedPark.name}</h2>
+          <p>Park Code: {savedPark.parkCode}</p>
+          {/* Display other park properties as needed */}
+        </div>
+      ) : (
+        <div>Loading...</div>
+      )}
+    </div>
+  );
+};
+
+export default GetMySavedParks
+
+
   
-}
-
-export default getMySavedParks

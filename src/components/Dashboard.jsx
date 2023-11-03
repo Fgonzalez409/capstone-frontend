@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import cookie from "cookie"
-// import getSavedParks from './getSavedParks';
+// import getMySavedParks from './getMySavedParks';
 import './Dashboard.css';
-import { Sledding } from '@mui/icons-material';
 const Dashboard = () => {
   const [data, setData] = useState([]);//Stores the list of parks fetched from the API.
   const [selectedPark, setSelectedPark] = useState(null);
@@ -89,26 +88,7 @@ const Dashboard = () => {
     }));
   };
   
-  const getPark = async() => {
-    const cookies = cookie.parse(document.cookie)
-    if(cookies.token){
-      console.log(cookies.token)
-      try {
-        const response = await axios.get('https://capstone-backend-blush.vercel.app/getParks',{
-          headers:{
-            Authorization:`Bearer ${cookies.token}`
-          }
-      })
-      
-        const saveParksData = response.data
-        setParksData(saveParksData)
-        console.log("saved parks dat", saveParksData)
-    } catch(err)  {
-        // console.error("Error retrieving", err)
-        throw err
-      }
-    }
-  }
+
 
   const savePark = () => {
     const cookies = cookie.parse(document.cookie)
@@ -137,6 +117,7 @@ const Dashboard = () => {
       // Provide feedback to the user that no park is selected or user not logged in
     }
   };
+
   return (
     <div className="dashboard-container">
       <div className="park-list">
@@ -185,19 +166,6 @@ const Dashboard = () => {
                           />
                       ))}
                   </div>
-
-                  {/* <div className="comments-section">
-                    <input
-                      type="text"
-                      placeholder="Add your comment..."
-                      value={comments}
-                      onChange={handleCommentChange}
-                      className="comment-input"
-                    />
-                    <button onClick={submitComment} className="comment-submit-button">
-                      Submit Comment
-                    </button>
-                  </div> */}
               </div>
             )}
             <button onClick={() => handleViewImages(park)}>View Images</button>
@@ -210,31 +178,3 @@ const Dashboard = () => {
   );
 };
 export default Dashboard; 
-
-
-
-
-
-
-
-
-
-// const fetchParkImages = (parkName) => {
-  //   const selectedParkData = data.find((park) => park.fullName === parkName);
-  // // const fetchParkImages = (parkName) => {
-  // //   const selectedParkData = data.find((park) => park.fullName === parkName);
-
-  //   if (selectedParkData && selectedParkData.images.length > 0) {
-  //     setImages(selectedParkData.images);
-  //     setSelectedImageIndex(0);
-  //   } else {
-  //     setImages([]);
-  //   }
-  // };
-  // //   if (selectedParkData && selectedParkData.images.length > 0) {
-  // //     setImages(selectedParkData.images);
-  // //     setSelectedImageIndex(0);
-  // //   } else {
-  // //     setImages([]);
-  // //   }
-  // // };

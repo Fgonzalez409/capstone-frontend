@@ -26,18 +26,23 @@ function DrawerAppBar(props) {
   const navigate = useNavigate()
 
   const handleNavBar = (item) => {
+    console.log("Clicked item - Dashboard", item)
     if(item === "Dashboard"){
       console.log("in dashboard")
       navigate("/")
     }
      
     else if (item === "My Parks"){
-      console.log("in dashboard")
+      console.log("Clicked item - My Park", item)
       navigate("/getMySavedParks")
     }
     
-    else 
+    else {
+      console.log("Clicked item - Logout", item)
+
       navigate("/signin")
+    }
+      
   }
 
 
@@ -89,19 +94,31 @@ function DrawerAppBar(props) {
           >
             National Parks
           </Typography>
-          {/* <Button
+
+
+          <Button
             color="inherit"
-            onClick={() => handleNavBar("/")}
+            onClick={() => handleNavBar("Dashboard")}//need to add a Home route
             >
-            New Dashboard button that will be added once routes are fixed
-          </Button> */}
-          <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-            {navItems.map((item) => (
-              <Button key={item} sx={{ color: '#fff' }}>
-                {item}
-              </Button>
-            ))}
-          </Box>
+            Dash
+          </Button>
+
+
+          <Button
+            color="inherit"
+            onClick={() => handleNavBar("My Parks")}
+            >
+            My Parks
+          </Button>
+
+          <Button
+            color="inherit"
+            onClick={() => handleNavBar("Sign out")}
+            >
+            Log out
+          </Button>
+
+
         </Toolbar>
       </AppBar>
       <nav>
