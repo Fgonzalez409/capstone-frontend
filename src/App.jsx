@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import {Routes, Route, Navigate, Link} from "react-router-dom"
 import Dashboard from './components/Dashboard'
 import TestHeader from './components/TestHeader'
-import GetMySavedParks from './components/GetMySavedParks'
+import GetMySavedParks from './components/getMySavedParks'
 import AuthForm from './components/Forms/AuthForm'
 import './App.css'
 
