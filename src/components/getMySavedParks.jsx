@@ -2,13 +2,18 @@ import axios from 'axios'
 import React, { useState, useEffect } from 'react';
 
 
-const GetMySavedParks = () => {
+const GetMySavedParks = (props) => {
+  const {token} = props
   const [savedPark, setSavedPark] = useState(null);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     axios
-      .get(`https://capstone-backend-blush.vercel.app/getSavedParks`)
+      .get(`https://capstone-backend-blush.vercel.app/getSavedParks`,{
+        headers:{
+          Authorization:`Bearer ${token}`
+        }
+      })
       .then((response) => {
         const retrievedPark = response.data;
         console.log('Park retrieved successfully:', retrievedPark);
