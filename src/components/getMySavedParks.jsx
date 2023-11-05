@@ -32,7 +32,7 @@ const GetMySavedParks = (props) => {
 
   return (
     <div>
-      {savedPark.length > 0 ? (
+      {savedPark > 0 ? (
         <div>
           {savedPark.map((park, index) => (
             <div key={index} id="park-info-container">
