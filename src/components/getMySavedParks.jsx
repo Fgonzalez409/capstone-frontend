@@ -21,7 +21,7 @@ const GetMySavedParks = (props) => {
         setSavedPark(retrievedPark);
       })
       .catch((error) => {
-        console.error('Error retrieving park fe:', error);
+        console.error('Error retrieving park :', error);
         setError(error);
       });
   }, []); // Empty dependency array means this effect runs once after the initial render
