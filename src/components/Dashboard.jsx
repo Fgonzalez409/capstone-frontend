@@ -124,7 +124,7 @@ const Dashboard = () => {
         {data.map((park) => (
           <div key={park.id} className="park-item">
             <h3>{park.fullName}</h3>
-            <p>{park.parkCode}</p>
+            {/* <p>{park.parkCode}</p> */}
             <p>{park.description}</p>
 
             {park.images && park.images.length > 0 && (
