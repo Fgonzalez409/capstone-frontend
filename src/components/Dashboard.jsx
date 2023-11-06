@@ -125,6 +125,8 @@ const Dashboard = () => {
           <div key={park.id} className="park-item">
             <h3>{park.fullName}</h3>
             <p>{park.parkCode}</p>
+            <p>{park.description}</p>
+
             {park.images && park.images.length > 0 && (
               <img
                 src={park.images[0].url}
