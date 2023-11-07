@@ -114,7 +114,7 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard-container">
-      {<div className="Map"><MapContainer/></div>}
+      {<div className="Map">asdf <MapContainer/></div>}
       <div className="park-list">
         {data.map((park) => (
           <div key={park.id} className="park-item">
