@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import cookie from "cookie"
-// import getMySavedParks from './getMySavedParks';
 import './Dashboard.css';
+import MapContainer from "./Map"
+
+
 const Dashboard = () => {
   const [data, setData] = useState([]);//Stores the list of parks fetched from the API.
   const [selectedPark, setSelectedPark] = useState(null);
@@ -120,6 +122,7 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard-container">
+      <div><Map/></div>
       <div className="park-list">
         {data.map((park) => (
           <div key={park.id} className="park-item">
