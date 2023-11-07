@@ -131,7 +131,6 @@ const Dashboard = () => {
             )}
 
             <div className="comment-box">
-              {/* Input field for adding comments */}
               <input
                 type="text"
                 placeholder="Add your comment..."
