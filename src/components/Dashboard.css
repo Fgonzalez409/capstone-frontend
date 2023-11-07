@@ -52,8 +52,8 @@
   }
 
   .first-park-image {
-    max-Width: 400px; /* Set the maximum width of the image */
-    max-Height: 450px; /* Set the maximum height of the image */
+    max-width: 400px; /* Set the maximum width of the image */
+    max-height: 450px; /* Set the maximum height of the image */
     width: auto; /* Maintain the aspect ratio while limiting width */
     height: auto; /* Maintain the aspect ratio while limiting height */
   }
