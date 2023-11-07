@@ -3,7 +3,7 @@ import axios from 'axios';
 import cookie from "cookie"
 import './Dashboard.css';
 import MapContainer from "./Map"
-import "/Map.css"
+import "./Map.css"
 
 
 const Dashboard = () => {
@@ -13,16 +13,7 @@ const Dashboard = () => {
   const [mainImage, setMainImage] = useState(null);
   const [thumbnailImages, setThumbnailImages] = useState([]);
   const [selectedImageDescription, setSelectedImageDescription] = useState('');
-  const [parkImages, setParkImages] = useState({});
   const [comments, setComments] = useState('');
-
-
-
-  const [images, setImages] = useState([])
-  const [selectedImageIndex, setSelectedImageIndex] = useState(0);//tracks index of selected image
-  const [cachedData, setCachedData] = useState(null);  // Define a state variable to cache the fetched data
-
-
 
 
 
