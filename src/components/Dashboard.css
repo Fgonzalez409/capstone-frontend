@@ -8,6 +8,11 @@
     object-fit: cover; /*Ensure the image covers the specified dimensions*/
   }
   
+.Map {
+  height: 400px;
+  width:400px;
+}
+
   .main-image {
     max-width: 400px; /* Set the maximum width of the main image to fit its container */
     max-height: 400px; /* Set the maximum height of the main image */
