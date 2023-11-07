@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import cookie from "cookie"
 import './Dashboard.css';
-import MapContainer from "./Map"
 import "./Map.css"
+import Map from './Map';
 
 
 const Dashboard = () => {
@@ -114,7 +114,7 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard-container">
-      <div className="Map"> </div>
+      <div className="Map"> <Map/></div>
       <div className="park-list">
         {data.map((park) => (
           <div key={park.id} className="park-item">

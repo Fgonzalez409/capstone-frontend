@@ -1,20 +1,28 @@
-// import React, { Component } from 'react';
-// import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
+import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
+import { useMemo } from "react";
+import "./Map.css";
 
-// class MapContainer extends Component {
-//   render() {
-//     return (
-//       <Map
-//         google={this.props.google}
-//         zoom={14}
-//         initialCenter={{ lat: 37.774929, lng: -122.419416 }}
-//       >
-//         <Marker position={{ lat: 37.774929, lng: -122.419416 }} />
-//       </Map>
-//     );
-//   }
-// }
+const Map = () => {
+  const apiKey = process.env.REACT_APP_API_KEY
 
-// export default GoogleApiWrapper({
-//   apiKey: 'AIzaSyBtWyhTbn-F4QF2jCB55ixctnQZbyzqQj4' // Replace with your actual API key
-// })(MapContainer);
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: apiKey,
+  });
+  const center = useMemo(() => ({ lat: 18.52043, lng: 73.856743 }), []);
+
+  return (
+    <div className="App">
+      {!isLoaded ? (
+        <h1>Loading...</h1>
+      ) : (
+        <GoogleMap
+          mapContainerClassName="map-container"
+          center={center}
+          zoom={10}
+        />
+      )}
+    </div>
+  );
+};
+
+export default Map
