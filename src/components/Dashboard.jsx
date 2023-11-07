@@ -3,6 +3,7 @@ import axios from 'axios';
 import cookie from "cookie"
 import './Dashboard.css';
 import MapContainer from "./Map"
+import "/Map.css"
 
 
 const Dashboard = () => {
@@ -122,7 +123,7 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard-container">
-      <div><Map/></div>
+      <div className="Map"><Map/></div>
       <div className="park-list">
         {data.map((park) => (
           <div key={park.id} className="park-item">
