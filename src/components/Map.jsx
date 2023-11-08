@@ -3,7 +3,7 @@ import { useMemo } from "react";
 import "./Map.css";
 
 const Map = () => {
-  const apiKey = process.env.REACT_APP_API_KEY
+  const apiKey = "AIzaSyBFror_Ln-VZWN0gQLK_AfwXaibys_P3dg"
 
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: apiKey,
