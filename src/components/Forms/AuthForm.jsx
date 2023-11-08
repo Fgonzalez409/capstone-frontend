@@ -32,7 +32,7 @@ const content = formType === "signup" ? signupContent : signinContent
         e.preventDefault()
         
 
-    axios.post(`https://capstone-backend-blush.vercel.app/signin`, {
+    axios.post(`https://capstone-backend-blush.vercel.app/${content.route}`, {
         email,
         password
     }).then((res) => {
