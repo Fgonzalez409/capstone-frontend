@@ -85,6 +85,44 @@ const Dashboard = () => {
   
 
 
+
+  const saveComment = () => {
+    const cookies = cookie.parse(document.cookie)
+    if (selectedPark && cookies.token) {
+      const { parkId } = selectedPark;
+      axios
+        .post('https://capstone-backend-blush.vercel.app/comments', {
+          parkId,
+          // Include any other data you want to save
+        }, {
+          headers:{
+            Authorization:`Bearer ${cookies.token}`
+          }
+        })
+        .then((response) => {
+          console.log('Comment saved successfully:', response.data);
+          // You can provide feedback to the user here if needed
+          alert("Comment saved successfully")
+        })
+        .catch((error) => {
+          console.error('Error saving comment:', error);
+          // Handle the error and provide feedback to the user
+        });
+    } else {
+      console.log('Error saving comment');
+      // Provide feedback to the user that no park is selected or user not logged in
+    }
+  };
+
+
+
+
+
+
+
+
+
+
   const savePark = () => {
     const cookies = cookie.parse(document.cookie)
     if (selectedPark && cookies.token) {
