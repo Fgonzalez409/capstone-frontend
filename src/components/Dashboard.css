@@ -10,11 +10,12 @@
   
 
 
-  .main-image {
-    max-width: 400px; /* Set the maximum width of the main image to fit its container */
-    max-height: 400px; /* Set the maximum height of the main image */
-    margin-bottom: 10px;
-  }
+/* Add this style for the main image in the selected park images section */
+.main-image {
+  width: 300px;
+  height: 300px;
+  object-fit: cover; /* This ensures the main image covers the area without stretching */
+}
 
   .image-thumbnails {
     display: flex;
@@ -51,12 +52,13 @@
     display: inline-block;
   }
 
-  .first-park-image {
-    max-width: 400px; /* Set the maximum width of the image */
-    max-height: 450px; /* Set the maximum height of the image */
-    width: auto; /* Maintain the aspect ratio while limiting width */
-    height: auto; /* Maintain the aspect ratio while limiting height */
-  }
+/* Add this CSS to your stylesheet (Dashboard.css or any other appropriate file) */
+.first-park-image {
+  width: 300px;
+  height: 300px;
+  object-fit: cover; /* This ensures the image covers the area without stretching */
+}
+
   .selected-park-images h2 {
     font-size: 24px;
     margin-bottom: 15px;
@@ -79,14 +81,12 @@
     flex-wrap: wrap;
   }
   
-  .thumbnail {
-    width: 100px;
-    height: 100px;
-    margin-right: 10px;
-    margin-bottom: 10px;
-
-    cursor: pointer;
-  }
+/* Add this style for thumbnail images in the selected park images section */
+.thumbnail {
+  width: 100px; /* Adjust the width of the thumbnails as needed */
+  height: 100px; /* Adjust the height of the thumbnails as needed */
+  object-fit: cover; /* This ensures the thumbnails cover the area without stretching */
+}
   
   .thumbnail:last-child {
     margin-right: 0;
