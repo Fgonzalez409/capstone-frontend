@@ -44,12 +44,11 @@
   }
 
   .park-item {
-    width: calc(33.33% - 20px); /* 20px is the total margin and padding space between items */
-    margin: 10px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    text-align: center;
-    display: inline-block;
+    width: 300px; /* Set a fixed width for the park items */
+    height: 400px; /* Set a fixed height for the park items */
+    margin-bottom: 20px; /* Add margin between park items */
+    padding: 20px; /* Add padding inside park items for better spacing */
+    border: 1px solid #ccc; /* Add a border for visual separation */
   }
 
 /* Add this CSS to your stylesheet (Dashboard.css or any other appropriate file) */
