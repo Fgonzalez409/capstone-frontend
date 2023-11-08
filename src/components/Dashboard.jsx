@@ -178,7 +178,7 @@ const Dashboard = () => {
                 className="comment-input"
               />
               {/* Button to submit comments */}
-              <button onClick={() => submitComment(park.id)} className="comment-submit-button">
+              <button onClick={() => saveComment()} className="comment-submit-button">
                 Submit Comment
               </button>
             </div>
