@@ -88,7 +88,6 @@ const Dashboard = () => {
 
   const saveComment = () => {
     const cookies = cookie.parse(document.cookie)
-    if (selectedPark && cookies.token) {
       const { parkId } = selectedPark;
       axios
         .post('https://capstone-backend-blush.vercel.app/comments', {
@@ -108,10 +107,6 @@ const Dashboard = () => {
           console.error('Error saving comment:', error);
           // Handle the error and provide feedback to the user
         });
-    } else {
-      console.log('Error saving comment', error);
-      // Provide feedback to the user that no park is selected or user not logged in
-    }
   };
 
 
