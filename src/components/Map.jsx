@@ -8,8 +8,7 @@ const Map = () => {
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: apiKey,
   });
-  const center = useMemo(() => ({ lat: 18.52043, lng: 73.856743 }), []);
-
+  const center = useMemo(() => ({ lat: 30.2672, lng: 97.7431 }), []);
   return (
     <div className="App">
       {!isLoaded ? (
