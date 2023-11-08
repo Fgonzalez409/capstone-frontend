@@ -86,6 +86,7 @@
   width: 100px; /* Adjust the width of the thumbnails as needed */
   height: 100px; /* Adjust the height of the thumbnails as needed */
   object-fit: cover; /* This ensures the thumbnails cover the area without stretching */
+  margin-right: 10px; /* Add margin between the thumbnail images */
 }
   
   .thumbnail:last-child {
