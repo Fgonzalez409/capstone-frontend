@@ -14,6 +14,7 @@ const Dashboard = () => {
   const [thumbnailImages, setThumbnailImages] = useState([]);
   const [selectedImageDescription, setSelectedImageDescription] = useState('');
   const [comments, setComments] = useState('');
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
 
 
