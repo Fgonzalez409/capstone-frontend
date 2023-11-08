@@ -88,7 +88,7 @@ const Dashboard = () => {
 
   const saveComment = () => {
     const cookies = cookie.parse(document.cookie)
-      const { parkId } = selectedPark;
+      const { id } = selectedPark;
       axios
         .post('https://capstone-backend-blush.vercel.app/comments', {
           parkId,
