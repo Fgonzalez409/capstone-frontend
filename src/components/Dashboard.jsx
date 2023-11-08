@@ -91,7 +91,7 @@ const Dashboard = () => {
       const { id } = selectedPark;
       axios
         .post('https://capstone-backend-blush.vercel.app/comments', {
-          parkId,
+          id,
           // Include any other data you want to save
         }, {
           headers:{
