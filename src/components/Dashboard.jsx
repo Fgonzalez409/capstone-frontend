@@ -109,7 +109,7 @@ const Dashboard = () => {
           // Handle the error and provide feedback to the user
         });
     } else {
-      console.log('Error saving comment');
+      console.log('Error saving comment', error);
       // Provide feedback to the user that no park is selected or user not logged in
     }
   };
