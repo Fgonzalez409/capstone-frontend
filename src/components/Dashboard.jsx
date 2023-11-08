@@ -86,12 +86,14 @@ const Dashboard = () => {
 
 
 
-  const saveComment = () => {
+  const saveComment = (parkId) => {
     const cookies = cookie.parse(document.cookie)
+    const comment = comments[parkId]
     const { parkCode:parkCode } = selectedPark;
     axios
         .post('https://capstone-backend-blush.vercel.app/comments', {
           parkCode,
+          comment,
           // Include any other data you want to save
         }, {
           headers:{
