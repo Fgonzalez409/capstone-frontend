@@ -38,9 +38,6 @@ function App() {
           <Route path="/signin" element={<AuthForm setToken={setToken} formType="signin" />}/>
           <Route path="/" element={<ProtectedRoute component={Dashboard} token={token}/>}/>
           <Route path="/getMySavedParks" element={<GetMySavedParks token={token}/>} />
-          
-          {/* <Route path="/" element={ <Dashboard token={token}/>}/> */}
-
         </Routes>
     </>
   )
