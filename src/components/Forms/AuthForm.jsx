@@ -38,6 +38,7 @@ const content = formType === "signup" ? signupContent : signinContent
         }).then((res) => {
             if(formType === "signup"){
                 setMessage(res.data.message)
+                console.log("Signup successful")
                 alert("You have been signed up!")
             } else {
                 document.cookie = `token=${res.data.token}`
