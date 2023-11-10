@@ -32,19 +32,20 @@ const content = formType === "signup" ? signupContent : signinContent
         e.preventDefault()
         
                                                             //signin
-    axios.post(`https://capstone-backend-blush.vercel.app/${content.route}`, {
-        email,
-        password
-    }).then((res) => {
-        if(formType === "signup"){
-            setMessage(res.data.message)
-        } else {
-            document.cookie = `token=${res.data.token}`
-            setToken(res.data.token)
-            navigate("/")//navigate to dashboard
+        axios.post(`https://capstone-backend-blush.vercel.app/${content.route}`, {
+            email,
+            password
+        }).then((res) => {
+            if(formType === "signup"){
+                setMessage(res.data.message)
+                alert("You have been signed up!")
+            } else {
+                document.cookie = `token=${res.data.token}`
+                setToken(res.data.token)
+                navigate("/")//navigate to dashboard
             }
         })
-}
+    }
 
   return (
     <div id="form-container">
