@@ -93,3 +93,45 @@
     margin-right: 0;
   }
   
+
+  @media only screen and (max-width: 768px) {
+    .dashboard-container {
+      flex-direction: column;
+    }
+  
+    .park-list {
+      order: 2;
+    }
+  
+    .Map {
+      order: 1;
+    }
+  
+    .park-item {
+      width: 100%;
+    }
+  
+    .comment-input,
+    .comment-submit-button {
+      width: 100%;
+    }
+  
+    .selected-park-images {
+      margin-top: 20px;
+    }
+  }
+  
+  @media only screen and (max-width: 480px) {
+    .park-item {
+      margin-bottom: 10px;
+    }
+  
+    .comment-box {
+      margin-top: 5px;
+    }
+  
+    .comment-input,
+    .comment-submit-button {
+      font-size: 14px;
+    }
+  }
