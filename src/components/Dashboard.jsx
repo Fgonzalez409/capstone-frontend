@@ -94,7 +94,6 @@ const Dashboard = () => {
         .post('https://capstone-backend-blush.vercel.app/comments', {
           parkCode,
           comment,
-          // Include any other data you want to save
         }, {
           headers:{
             Authorization:`Bearer ${cookies.token}`
@@ -114,7 +113,7 @@ const Dashboard = () => {
 
 
 
-
+console.log(comments)
 
 
 
