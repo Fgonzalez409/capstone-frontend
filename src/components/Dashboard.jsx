@@ -88,7 +88,7 @@ const Dashboard = () => {
 
   const saveComment = (parkId) => {
     const cookies = cookie.parse(document.cookie)
-    const comment = comments
+    const comment = comments[parkId]
     const { parkCode:parkCode } = selectedPark;
     axios
         .post('https://capstone-backend-blush.vercel.app/comments', {
@@ -174,7 +174,7 @@ console.log(comments)
                 className="comment-input"
               />
               {/* Button to submit comments */}
-              <button onClick={() => saveComment()} className="comment-submit-button">
+              <button onClick={() => saveComment(park.id)} className="comment-submit-button">
                 Submit Comment
               </button>
             </div>
