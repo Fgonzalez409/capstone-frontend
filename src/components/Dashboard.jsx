@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import cookie from "cookie"
-import GetMySavedParks from './GetMySavedParks';
+import GetMySavedParks from './getMySavedParks';
 import './Dashboard.css';
 import "./Map.css"
 import Map from './Map';
