@@ -69,22 +69,6 @@ const Dashboard = () => {
   };
 
 
-  const submitComment = (parkId) => {
-    // Get the comment for the specific park ID
-    const comment = comments[parkId];
-    
-    // Handle the comment for the specific park (e.g., send it to the server, etc.)
-    console.log(`Submitted Comment for Park ${parkId}:`, comment);
-    
-    // Clear the comment input field after submission
-    setComments((prevComments) => ({
-      ...prevComments,
-      [parkId]: '', // Clear the comment for the specific park ID
-    }));
-  };
-  
-
-
 
   const saveComment = (parkId) => {
     const cookies = cookie.parse(document.cookie)
@@ -101,23 +85,14 @@ const Dashboard = () => {
         })
         .then((response) => {
           console.log('Comment saved successfully:', response.data);
-          // You can provide feedback to the user here if needed
           alert("Comment saved successfully")
         })
         .catch((error) => {
           console.error('Error saving comment:', error);
-          // Handle the error and provide feedback to the user
         });
   };
 
-
-
-
-console.log(comments)
-
-
-
-
+// console.log(comments)
 
   const savePark = () => {
     const cookies = cookie.parse(document.cookie)

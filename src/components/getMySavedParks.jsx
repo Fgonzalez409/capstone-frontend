@@ -38,6 +38,9 @@ const GetMySavedParks = (props) => {
             <div key={index} id="park-info-container">
               <h2>{park.id}</h2>
               <p>Park Code: {park.parkCode}</p>
+              <div>
+                {park.image}
+              </div>
               {/* Display other park properties as needed */}
             </div>
           ))}
