@@ -36,8 +36,8 @@ const GetMySavedParks = (props) => {
         <div>
           {savedPark.map((park, index) => (
             <div key={index} id="park-info-container">
-              <h2>{park.park_id}</h2>
-              <p>Park Code: {park.parkCode}</p>
+              
+              <p>Park Code: {park.park_id}</p>
               <div>
                 {park.image}
               </div>
