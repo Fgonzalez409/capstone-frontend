@@ -174,6 +174,8 @@ const Dashboard = () => {
                           />
                       ))}
                   </div>
+                  {/*Pass images to getMySavedParks component*/}
+                  <GetMySavedParks token={cookies.token} savedParks={data}/>
               </div>
             )}
             <button onClick={() => handleViewImages(park)}>View Images</button>

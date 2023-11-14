@@ -39,7 +39,10 @@ const GetMySavedParks = (props) => {
               
               <p>Park Code: {park.park_id}</p>
               <div>
-                {park.image}
+                {/* Access images from savedParks here */}
+                {savedParks.find((savedPark) => savedPark.id === park.park_id) ?.images.map((image, imageIndex) => (
+                    <img key={imageIndex} src={image.url} alt={`Park Image ${imageIndex}`}/>
+                ))}
               </div>
               {/* Display other park properties as needed */}
             </div>
