@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import cookie from "cookie"
-import getMySavedParks from './getMySavedParks';
+import GetMySavedParks from './getMySavedParks';
 import './Dashboard.css';
 import "./Map.css"
 import Map from './Map';
@@ -178,7 +178,7 @@ const Dashboard = () => {
                       ))}
                   </div>
                   {/*Pass images to getMySavedParks component*/}
-                  <getMySavedParks token={token} savedParks={data}/>
+                  <GetMySavedParks token={token} savedParks={data}/>
               </div>
             )}
             <button onClick={() => handleViewImages(park)}>View Images</button>
