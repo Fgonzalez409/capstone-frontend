@@ -16,6 +16,7 @@ const Dashboard = () => {
   const [selectedImageDescription, setSelectedImageDescription] = useState('');
   const [comments, setComments] = useState('');
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const [token, setToken] = useState('');
 
 
 
@@ -31,6 +32,8 @@ const Dashboard = () => {
       }
     };
     fetchData();
+    const cookies = cookie.parse(document.cookie);
+    setToken(cookies.token || '');
   }, []);
 
 
@@ -175,7 +178,7 @@ const Dashboard = () => {
                       ))}
                   </div>
                   {/*Pass images to getMySavedParks component*/}
-                  <GetMySavedParks token={cookies.token} savedParks={data}/>
+                  <getMySavedParks token={token} savedParks={data}/>
               </div>
             )}
             <button onClick={() => handleViewImages(park)}>View Images</button>
