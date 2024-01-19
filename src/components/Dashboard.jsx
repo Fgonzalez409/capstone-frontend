@@ -57,9 +57,10 @@ const Dashboard = () => {
       setMainImage(null);
       setThumbnailImages([]);
       setSelectedImageDescription('No images available');
+      setShowImages(true);
+
     }
   
-    setShowImages(true);
   };
 
 
