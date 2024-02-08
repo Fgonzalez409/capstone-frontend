@@ -51,16 +51,15 @@ const Dashboard = () => {
       } else {
         setSelectedImageDescription('No description available');
       }
+      setShowImages(true); // Make sure to set showImages to true when images are available
     } else {
       // If the selected park has no images
       setSelectedPark(null);
       setMainImage(null);
       setThumbnailImages([]);
       setSelectedImageDescription('No images available');
-      setShowImages(true);
-
+      setShowImages(false); // Ensure showImages is set to false when no images are available
     }
-  
   };
 
 
