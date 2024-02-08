@@ -38,6 +38,7 @@ const Dashboard = () => {
 
 
   const handleViewImages = (park) => {
+    console.log("Received park:", park); // Log the park object received
     if (park.images && park.images.length > 0) {
       console.log("Park images:", park.images); // Log park images to check if they are available
       const mainImage = park.images[0].url;
