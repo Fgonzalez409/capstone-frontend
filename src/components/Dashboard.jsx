@@ -49,7 +49,10 @@ const Dashboard = () => {
         const validImages = park.images.filter(image => image && image.url);
   
         if (validImages.length > 1) {
-          thumbnailImages = validImages.slice(1).map(image => image.url);
+          thumbnailImages = validImages.slice(1).map((image, index) => {
+            console.log("Mapping image:", image, "Index:", index); // Log the image being mapped
+            return image.url;
+          });
         }
   
         setSelectedPark(park);
