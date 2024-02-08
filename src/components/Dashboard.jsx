@@ -41,7 +41,11 @@ const Dashboard = () => {
     if (park.images && park.images.length > 0) {
       console.log("Park images:", park.images); // Log park images to check if they are available
       const mainImage = park.images[0].url;
-      const thumbnailImages = park.images.length > 1 ? park.images.slice(1).map(image => image.url) : [];
+      let thumbnailImages = [];
+  
+      if (park.images.length > 1) {
+        thumbnailImages = park.images.slice(1).map(image => image.url);
+      }
   
       setSelectedPark(park);
       setThumbnailImages(thumbnailImages);
@@ -62,6 +66,7 @@ const Dashboard = () => {
       setShowImages(false); // Ensure showImages is set to false when no images are available
     }
   };
+  
 
 
 
