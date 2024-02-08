@@ -38,36 +38,40 @@ const Dashboard = () => {
 
 
   const handleViewImages = (park) => {
-    console.log("Received park:", park); // Log the park object received
-    if (park.images && park.images.length > 0) {
-      console.log("Park images:", park.images); // Log park images to check if they are available
-      const mainImage = park.images[0].url;
-      let thumbnailImages = [];
+    try {
+      console.log("Received park:", park); // Log the park object received
+      if (park.images && park.images.length > 0) {
+        console.log("Park images:", park.images); // Log park images to check if they are available
+        const mainImage = park.images[0].url;
+        let thumbnailImages = [];
   
-      // Filter images to ensure they have the required properties
-      const validImages = park.images.filter(image => image && image.url);
+        // Filter images to ensure they have the required properties
+        const validImages = park.images.filter(image => image && image.url);
   
-      if (validImages.length > 1) {
-        thumbnailImages = validImages.slice(1).map(image => image.url);
-      }
+        if (validImages.length > 1) {
+          thumbnailImages = validImages.slice(1).map(image => image.url);
+        }
   
-      setSelectedPark(park);
-      setThumbnailImages(thumbnailImages);
-      setSelectedImageIndex(0);
+        setSelectedPark(park);
+        setThumbnailImages(thumbnailImages);
+        setSelectedImageIndex(0);
   
-      if (validImages.length > 0) {
-        setSelectedImageDescription(validImages[0].title || 'No description available');
+        if (validImages.length > 0) {
+          setSelectedImageDescription(validImages[0].title || 'No description available');
+        } else {
+          setSelectedImageDescription('No images available');
+        }
+        setShowImages(true); // Make sure to set showImages to true when images are available
       } else {
+        // If the selected park has no images
+        setSelectedPark(null);
+        setMainImage(null);
+        setThumbnailImages([]);
         setSelectedImageDescription('No images available');
+        setShowImages(false); // Ensure showImages is set to false when no images are available
       }
-      setShowImages(true); // Make sure to set showImages to true when images are available
-    } else {
-      // If the selected park has no images
-      setSelectedPark(null);
-      setMainImage(null);
-      setThumbnailImages([]);
-      setSelectedImageDescription('No images available');
-      setShowImages(false); // Ensure showImages is set to false when no images are available
+    } catch (error) {
+      console.error("Error in handleViewImages:", error);
     }
   };
   
