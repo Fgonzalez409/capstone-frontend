@@ -45,7 +45,7 @@ const Dashboard = () => {
       let thumbnailImages = [];
   
       // Filter images to ensure they have the required properties
-      const validImages = park.images.filter(image => image.url);
+      const validImages = park.images.filter(image => image && image.url);
   
       if (validImages.length > 1) {
         thumbnailImages = validImages.slice(1).map(image => image.url);
