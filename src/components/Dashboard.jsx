@@ -39,8 +39,9 @@ const Dashboard = () => {
 
   const handleViewImages = (park) => {
     if (park.images && park.images.length > 0) {
+      console.log("Park images:", park.images); // Log park images to check if they are available
       const mainImage = park.images[0].url;
-      const thumbnailImages = park.images.slice(1).map(image => image.url);
+      const thumbnailImages = park.images.length > 1 ? park.images.slice(1).map(image => image.url) : [];
   
       setSelectedPark(park);
       setThumbnailImages(thumbnailImages);
