@@ -4,6 +4,7 @@ import cookie from "cookie"
 import './Dashboard.css';
 import "./Map.css"
 import Map from './Map';
+
 const Dashboard = () => {
   const [data, setData] = useState([]);//Stores the list of parks fetched from the API.
   const [selectedPark, setSelectedPark] = useState(null);
@@ -13,6 +14,8 @@ const Dashboard = () => {
   const [selectedImageDescription, setSelectedImageDescription] = useState('');
   const [comments, setComments] = useState('');
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const [savedComments, setSavedComments] = useState([]); // State to store retrieved comments
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -26,6 +29,24 @@ const Dashboard = () => {
     };
     fetchData();
   }, []);
+
+  const fetchComments = (parkCode) => {
+    const cookies = cookie.parse(document.cookie);
+    axios.get(`https://capstone-backend-blush.vercel.app/comments/${parkCode}`, {
+      headers:{
+        Authorization:`Bearer ${cookies.token}`
+      }
+    })
+    .then((response) => {
+      console.log('Comments retrieved successfully:', response.data);
+      setSavedComments(response.data); // Set retrieved comments in state
+    })
+    .catch((error) => {
+      console.error('Error retrieving comments:', error);
+      // Handle the error and provide feedback to the user
+    });
+  };
+
   const handleViewImages = (park) => {
     if (park.images && park.images.length > 0) {
       const mainImage = park.images[0].url;
@@ -50,6 +71,7 @@ const Dashboard = () => {
   
     setShowImages(true);
   };
+
   const handleCommentChange = (event, parkId) => {
     // Update the comments state for the specific park ID
     setComments((prevComments) => ({
@@ -57,6 +79,7 @@ const Dashboard = () => {
       [parkId]: event.target.value,
     }));
   };
+
   const submitComment = (parkId) => {
     // Get the comment for the specific park ID
     const comment = comments[parkId];
@@ -74,7 +97,6 @@ const Dashboard = () => {
 
   const saveComment = (parkId) => {
     const cookies = cookie.parse(document.cookie)
-    // const comment = comments
     const comment = comments[parkId]
     const { parkCode:parkCode } = selectedPark;
     axios
@@ -96,7 +118,7 @@ const Dashboard = () => {
           // Handle the error and provide feedback to the user
         });
   };
-console.log(comments)
+
   const savePark = () => {
     const cookies = cookie.parse(document.cookie)
     if (selectedPark && cookies.token) {
@@ -124,6 +146,7 @@ console.log(comments)
       // Provide feedback to the user that no park is selected or user not logged in
     }
   };
+
   return (
     <div className="dashboard-container">
       <div className="Map"> <Map/></div>
@@ -131,7 +154,6 @@ console.log(comments)
         {data.map((park) => (
           <div key={park.id} className="park-item">
             <h3>{park.fullName}</h3>
-            {/* <p>{park.parkCode}</p> */}
             <p>{park.description}</p>
             {park.images && park.images.length > 0 && (
               <img
@@ -174,6 +196,12 @@ console.log(comments)
             )}
             <button onClick={() => handleViewImages(park)}>View Images</button>
             <button onClick={() => savePark()}>Save Park</button>
+            <button onClick={() => fetchComments(park.parkCode)}>Retrieve Comments</button> {/* Button to retrieve comments */}
+            <div> {/* Display retrieved comments */}
+              {savedComments.map((comment, index) => (
+                <p key={index}>{comment}</p>
+              ))}
+            </div>
           </div>
         ))}
       </div>
@@ -181,4 +209,5 @@ console.log(comments)
     </div>
   );
 };
-export default Dashboard; 
+
+export default Dashboard;
