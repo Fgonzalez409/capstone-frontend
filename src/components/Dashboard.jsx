@@ -74,7 +74,7 @@ const Dashboard = () => {
 
   const saveComment = (parkId) => {
     const cookies = cookie.parse(document.cookie)
-    const comment = comments
+    // const comment = comments
     const comment = comments[parkId]
     const { parkCode:parkCode } = selectedPark;
     axios
