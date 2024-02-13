@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import cookie from "cookie"
-import GetMySavedParks from './getMySavedParks';
 import './Dashboard.css';
 import "./Map.css"
 import Map from './Map';
-
-
 const Dashboard = () => {
   const [data, setData] = useState([]);//Stores the list of parks fetched from the API.
   const [selectedPark, setSelectedPark] = useState(null);
@@ -16,10 +13,6 @@ const Dashboard = () => {
   const [selectedImageDescription, setSelectedImageDescription] = useState('');
   const [comments, setComments] = useState('');
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
-  const [token, setToken] = useState('');
-
-
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -32,56 +25,31 @@ const Dashboard = () => {
       }
     };
     fetchData();
-    const cookies = cookie.parse(document.cookie);
-    setToken(cookies.token || '');
   }, []);
-
-
   const handleViewImages = (park) => {
-    try {
-      console.log("Received park:", park); // Log the park object received
-      if (park.images && park.images.length > 0) {
-        console.log("Park images:", park.images); // Log park images to check if they are available
-        const mainImage = park.images[0].url;
-        let thumbnailImages = [];
+    if (park.images && park.images.length > 0) {
+      const mainImage = park.images[0].url;
+      const thumbnailImages = park.images.slice(1).map(image => image.url);
   
-        // Filter images to ensure they have the required properties
-        const validImages = park.images.filter(image => image && image.url);
+      setSelectedPark(park);
+      setThumbnailImages(thumbnailImages);
+      setSelectedImageIndex(0);
   
-        if (validImages.length > 1) {
-          thumbnailImages = validImages.slice(1).map(image => image.url);
-        }
-  
-        setSelectedPark(park);
-        if (Array.isArray(thumbnailImages)) { // Ensure thumbnailImages is an array
-          setThumbnailImages(thumbnailImages);
-        } else {
-          setThumbnailImages([]);
-        }
-        setSelectedImageIndex(0);
-  
-        if (validImages.length > 0) {
-          setSelectedImageDescription(validImages[0].title || 'No description available');
-        } else {
-          setSelectedImageDescription('No images available');
-        }
-        setShowImages(true); // Make sure to set showImages to true when images are available
+      if (park.images[0].title) {
+        setSelectedImageDescription(park.images[0].title);
       } else {
-        // If the selected park has no images
-        setSelectedPark(null);
-        setMainImage(null);
-        setThumbnailImages([]);
-        setSelectedImageDescription('No images available');
-        setShowImages(false); // Ensure showImages is set to false when no images are available
+        setSelectedImageDescription('No description available');
       }
-    } catch (error) {
-      console.error("Error in handleViewImages:", error);
+    } else {
+      // If the selected park has no images
+      setSelectedPark(null);
+      setMainImage(null);
+      setThumbnailImages([]);
+      setSelectedImageDescription('No images available');
     }
-  };
   
-
-
-
+    setShowImages(true);
+  };
   const handleCommentChange = (event, parkId) => {
     // Update the comments state for the specific park ID
     setComments((prevComments) => ({
@@ -89,11 +57,24 @@ const Dashboard = () => {
       [parkId]: event.target.value,
     }));
   };
-
-
+  const submitComment = (parkId) => {
+    // Get the comment for the specific park ID
+    const comment = comments[parkId];
+    
+    // Handle the comment for the specific park (e.g., send it to the server, etc.)
+    console.log(`Submitted Comment for Park ${parkId}:`, comment);
+    
+    // Clear the comment input field after submission
+    setComments((prevComments) => ({
+      ...prevComments,
+      [parkId]: '', // Clear the comment for the specific park ID
+    }));
+  };
+  
 
   const saveComment = (parkId) => {
     const cookies = cookie.parse(document.cookie)
+    const comment = comments
     const comment = comments[parkId]
     const { parkCode:parkCode } = selectedPark;
     axios
@@ -107,15 +88,15 @@ const Dashboard = () => {
         })
         .then((response) => {
           console.log('Comment saved successfully:', response.data);
+          // You can provide feedback to the user here if needed
           alert("Comment saved successfully")
         })
         .catch((error) => {
           console.error('Error saving comment:', error);
+          // Handle the error and provide feedback to the user
         });
   };
-
-// console.log(comments)
-
+console.log(comments)
   const savePark = () => {
     const cookies = cookie.parse(document.cookie)
     if (selectedPark && cookies.token) {
@@ -143,7 +124,6 @@ const Dashboard = () => {
       // Provide feedback to the user that no park is selected or user not logged in
     }
   };
-
   return (
     <div className="dashboard-container">
       <div className="Map"> <Map/></div>
@@ -153,7 +133,6 @@ const Dashboard = () => {
             <h3>{park.fullName}</h3>
             {/* <p>{park.parkCode}</p> */}
             <p>{park.description}</p>
-
             {park.images && park.images.length > 0 && (
               <img
                 src={park.images[0].url}
@@ -161,7 +140,6 @@ const Dashboard = () => {
                 className="first-park-image"
               />
             )}
-
             <div className="comment-box">
               <input
                 type="text"
@@ -175,15 +153,12 @@ const Dashboard = () => {
                 Submit Comment
               </button>
             </div>
-
             {comments[park.id] && <p>Comment: {comments[park.id]}</p>}
               
           {showImages && selectedPark && selectedPark.id === park.id && (
               <div className="selected-park-images">
                   {mainImage && <img src={mainImage} alt={`Main Park`} className="main-image" />}
                   <p>{selectedImageDescription}</p>
-
-
                   <div className="thumbnail-container">
                       {thumbnailImages.map((thumbnail, index) => (
                           <img
@@ -195,8 +170,6 @@ const Dashboard = () => {
                           />
                       ))}
                   </div>
-                  {/*Pass images to getMySavedParks component*/}
-                  <GetMySavedParks token={token} savedParks={data}/>
               </div>
             )}
             <button onClick={() => handleViewImages(park)}>View Images</button>
