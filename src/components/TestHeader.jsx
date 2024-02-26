@@ -33,7 +33,7 @@ function DrawerAppBar(props) {
     }
      
     else if (item === "My Parks"){
-      console.log("Clicked item - My Park", item)
+      console.log("Clicked item - My Parks", item)
       navigate("/getMySavedParks")
     }
     
