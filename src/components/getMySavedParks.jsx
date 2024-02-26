@@ -19,6 +19,7 @@ const GetMySavedParks = (props) => {
         console.log('Park retrieved successfully:', retrievedPark);
         console.log("API response", response)
         setSavedPark(retrievedPark);
+        console.log("This is the saved park data", savedPark)
       })
       .catch((error) => {
         console.error('Error retrieving park :', error);
