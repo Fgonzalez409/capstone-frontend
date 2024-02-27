@@ -36,7 +36,9 @@ const GetMySavedParks = (props) => {
 
   return (
   <div>
+    <h2>These are the parks you have visited!</h2>
     {savedPark ? (
+
       savedPark.map((park, index) => (
         <div key={index}>
           {/* Render park information here */}
