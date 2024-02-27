@@ -29,34 +29,26 @@ const GetMySavedParks = (props) => {
         setError(error);
       });
   }, []); // Empty dependency array means this effect runs once after the initial render
-  
+
   if (error) {
     return <div>Error retrieving park: {error.message}</div>;
   }
 
   return (
-    <div>
-      {savedPark ? (
-        <div>
-          {savedPark.map((park, index) => (
-            <div key={index} id="park-info-container">
-              
-              <p>Park Code: {park.park_id}</p>
-              <div>
-                {/* Access images from savedParks here */}
-                {park.images.map((image, imageIndex) => (
-                  <img key={imageIndex} src={image.url} alt={`Park Image ${imageIndex}`} />
-                ))}
-              </div>
-              {/* Display other park properties as needed */}
-            </div>
-          ))}
+  <div>
+    {savedPark ? (
+      savedPark.map((park, index) => (
+        <div key={index}>
+          {/* Render park information here */}
+          <p>Park Code: {park.park_id}</p>
+          {/* Render other park details as needed */}
         </div>
-      ) : (
-        <div>Loading...</div>
-      )}
-    </div>
-  );
+      ))
+    ) : (
+      <div>Loading...</div>
+    )}
+  </div>
+);
 };
 
 export default GetMySavedParks
