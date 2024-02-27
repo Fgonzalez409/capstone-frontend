@@ -8,6 +8,10 @@ const GetMySavedParks = (props) => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    console.log("This is the saved park data", savedPark);
+  }, [savedPark]); // Run this effect whenever savedPark changes
+  
+  useEffect(() => {
     axios
       .get(`https://capstone-backend-blush.vercel.app/getSavedParks`,{
         headers:{
@@ -17,16 +21,15 @@ const GetMySavedParks = (props) => {
       .then((response) => {
         const retrievedPark = response.data;
         console.log('Park retrieved successfully:', retrievedPark);
-        console.log("API response", response)
+        console.log("API response", response);
         setSavedPark(retrievedPark);
-        console.log("This is the saved park data", savedPark)
       })
       .catch((error) => {
-        console.error('Error retrieving park :', error);
+        console.error('Error retrieving park:', error);
         setError(error);
       });
   }, []); // Empty dependency array means this effect runs once after the initial render
-
+  
   if (error) {
     return <div>Error retrieving park: {error.message}</div>;
   }
