@@ -27,11 +27,10 @@ function App() {
     <>
         <TestHeader/>
         {!token && (
-          <>
-            <Link to="/signup">Click here to sign up</Link>
-            <br />
-            <Link to="/signin">Click here to sign in</Link>
-          </>
+          <div className="auth-links-container">
+          <Link to="/signup" className="auth-button">Sign Up</Link>
+          <Link to="/signin" className="auth-button">Sign In</Link>
+        </div>
         )}
         <Routes>
           <Route path="/signup" element={<AuthForm formType="signup"/>}/>
