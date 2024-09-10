@@ -25,6 +25,13 @@ function App() {
   const [token, setToken] = useState("")
   return (
     <>
+        <Routes>
+          <Route path="/signup" element={<AuthForm formType="signup"/>}/>
+          <Route path="/signin" element={<AuthForm setToken={setToken} formType="signin" />}/>
+          <Route path="/" element={<ProtectedRoute component={Dashboard} token={token}/>}/>
+          <Route path="/getMySavedParks" element={<GetMySavedParks token={token}/>} />
+        </Routes>
+        
         <TestHeader/>
         {!token && (
           <div className="auth-links-container">
@@ -32,12 +39,6 @@ function App() {
           <Link to="/signin" className="auth-button">Sign In</Link>
         </div>
         )}
-        <Routes>
-          <Route path="/signup" element={<AuthForm formType="signup"/>}/>
-          <Route path="/signin" element={<AuthForm setToken={setToken} formType="signin" />}/>
-          <Route path="/" element={<ProtectedRoute component={Dashboard} token={token}/>}/>
-          <Route path="/getMySavedParks" element={<GetMySavedParks token={token}/>} />
-        </Routes>
     </>
   )
 }
