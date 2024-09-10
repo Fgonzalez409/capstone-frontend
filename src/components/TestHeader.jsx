@@ -100,7 +100,7 @@ function DrawerAppBar(props) {
             color="inherit"
             onClick={() => handleNavBar("Dashboard")}//need to add a Home route
             >
-            Dashboar
+            Dashboard
           </Button>
 
 

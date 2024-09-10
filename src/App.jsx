@@ -28,9 +28,9 @@ function App() {
         <TestHeader/>
         {!token && (
           <>
-            <Link to="/signup">Signup form</Link>
+            <Link to="/signup">Click here to sign up</Link>
             <br />
-            <Link to="/signin">Signin form</Link>
+            <Link to="/signin">Click here to sign in</Link>
           </>
         )}
         <Routes>
