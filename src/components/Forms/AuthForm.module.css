@@ -2,7 +2,7 @@
     display: block;
 }
 
-#form-container {
+.formContainer {
     display: block;
     width:300px;
     margin:auto;
