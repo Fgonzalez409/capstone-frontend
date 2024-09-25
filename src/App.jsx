@@ -25,10 +25,6 @@ function App() {
   const [token, setToken] = useState("")
   return (
     <>
-
-
-
-    
         <Routes>
           <Route path="/signup" element={<AuthForm formType="signup"/>}/>
           <Route path="/signin" element={<AuthForm setToken={setToken} formType="signin" />}/>
