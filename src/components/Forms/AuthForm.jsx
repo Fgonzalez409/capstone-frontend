@@ -48,7 +48,7 @@ const content = formType === "signup" ? signupContent : signinContent
     }
 
   return (
-    <div className="formContainer">
+    <div id="form-container">
         <form onSubmit={handleSubmit}>
             <h2>{content.title}</h2>
             <label className={styles.label}>
