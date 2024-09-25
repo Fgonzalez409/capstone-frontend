@@ -3,13 +3,12 @@ html {
 }
 #form-container {
     display: block;
-    margin-top: 200px;
     width:300px;
     margin:auto;
     border: 2px solid black;
     border-radius: 10px;
     padding:10px 10px 10px 10px;
-    /* box-shadow: 5px 5px 10px; */
+    box-shadow: 5px 5px 10px;
 }
 
 .auth-links-container {
