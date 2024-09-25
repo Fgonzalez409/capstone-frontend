@@ -9,6 +9,7 @@ html {
     border-radius: 10px;
     padding:10px 10px 10px 10px;
     box-shadow: 5px 5px 10px;
+    margin-top: 200px;
 }
 
 .auth-links-container {
